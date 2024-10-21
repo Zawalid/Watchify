@@ -1,0 +1,10 @@
+export { Home } from './Home';
+export { NotFound } from './404';
+export { Login } from './Login';
+export { Dashboard } from './Dashboard';
+export { Details } from './Details';
+export { Suggest } from './Suggest';
+export { Suggestions } from './Suggestions';
+export { Add } from './Add';
+export { Movies } from './Movies';
+export { TvShows } from './TvShows';
