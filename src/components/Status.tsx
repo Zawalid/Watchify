@@ -17,7 +17,7 @@ export function NoResults({ children }: { children?: ReactNode }) {
   );
 }
 
-export function EmptyWatchList({ type = "all" }) {
+export function EmptyWatchList({ type = "all" }: { type?: string }) {
   const heading =
     type === "all" ? "There are no items in your list" : `There are no ${type} in your list`;
 

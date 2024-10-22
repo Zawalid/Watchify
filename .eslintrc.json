@@ -1,7 +1,10 @@
 {
   "extends": [
     "next/core-web-vitals",
-    "next/typescript"
+    "next/typescript",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended"
   ],
   "overrides": [
     {
@@ -9,12 +12,7 @@
         "*.ts",
         "*.tsx"
       ],
-      "rules": {
-        // Add your TypeScript-specific rules here
-      }
+      "rules": {}
     }
-  ],
-  "settings": {
-    // Add any additional settings here
-  }
+  ]
 }

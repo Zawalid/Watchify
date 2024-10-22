@@ -1,12 +1,13 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Image from "next/image";
+import loginImage from "@/images/login.svg";
 
 export default function Page() {
   return (
     <div className="grid flex-1 items-center gap-5 md:grid-cols-2">
       <div className="relative h-full hidden md:block">
-        <Image src="/images/login.svg" alt="Login" fill />
+        <Image src={loginImage} alt="Login" fill placeholder="blur" />
       </div>
       <div>
         <h1 className="text-Grey/100 mb-12 text-6xl font-bold">Login</h1>
