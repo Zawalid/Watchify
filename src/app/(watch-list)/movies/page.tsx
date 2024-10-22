@@ -15,7 +15,7 @@ export default async function Page() {
             Walid Zakan
           </Link>
           <h1 className="text-Grey/50 text-4xl font-semibold">Movies</h1>
-          <SearchInput label="Search Movies" placeholder="eg. Interstellar" />
+          <SearchInput label="Search Your Movies" placeholder="eg. Interstellar" />
         </div>
       </div>
       <CardsList items={movies} emptyComponent={<EmptyWatchList type="movies" />} />

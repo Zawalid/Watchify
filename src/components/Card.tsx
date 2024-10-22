@@ -1,50 +1,74 @@
+import { GENRES } from "@/lib/TMDB/config";
+import { getMediaType, getRating, getReleaseYear, slugify } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Card({ item, action }: { item: Item; action?: JSX.Element }) {
-  const name = (item.original_name || item.name) as string;
-  const link = `/${item.media_type}/${item.id}`;
-  const rating = item.vote_average || 0;
+const getLink = (type: string, name: string) => {
+  return `/${type === "tv" ? "tv-shows" : "movies"}/${slugify(name)}`;
+};
+
+export default function Card({ media }: { media: TvShow | Movie }) {
+  const { original_name, poster_path, vote_average, genre_ids } = media;
+  const name = (original_name || media.name) as string;
+  const type = getMediaType(media);
 
   return (
-    <div className="border-Grey/700 group relative flex flex-col gap-4 rounded-xl border bg-[rgba(32,40,62,0.80)] p-2 pb-4 backdrop-blur-2xl">
-      <div className="bg-Black/65 text-Warning/500 absolute left-4 top-4 z-10 flex items-center gap-1 rounded-lg px-2 py-1 backdrop-blur-sm">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-        >
-          <path
-            d="M9.15336 2.34001L10.3267 4.68668C10.4867 5.01334 10.9134 5.32668 11.2734 5.38668L13.4 5.74001C14.76 5.96668 15.08 6.95334 14.1 7.92668L12.4467 9.58001C12.1667 9.86001 12.0134 10.4 12.1 10.7867L12.5734 12.8333C12.9467 14.4533 12.0867 15.08 10.6534 14.2333L8.66003 13.0533C8.30003 12.84 7.7067 12.84 7.34003 13.0533L5.3467 14.2333C3.92003 15.08 3.05336 14.4467 3.4267 12.8333L3.90003 10.7867C3.9867 10.4 3.83336 9.86001 3.55336 9.58001L1.90003 7.92668C0.926698 6.95334 1.24003 5.96668 2.60003 5.74001L4.7267 5.38668C5.08003 5.32668 5.5067 5.01334 5.6667 4.68668L6.84003 2.34001C7.48003 1.06668 8.52003 1.06668 9.15336 2.34001Z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-        <span className="text-sm">{rating % 1 === 0 ? rating : rating.toFixed(2)}</span>
-      </div>
-      <Link href={link}>
-        <div className="h-[300px] relative overflow-hidden rounded-xl ">
-          {item.poster_path ? (
+    <div className="flex flex-col">
+      <Link
+        href={getLink(type, name)}
+        className="w-full h-auto md:h-[250px] lg:h-[300px] mb-3 rounded-2xl"
+      >
+        <div className="w-full h-[220px] md:h-[250px] lg:h-[300px] relative overflow-hidden shadow-lg rounded-2xl ">
+          {media.poster_path ? (
             <Image
-              src={`http://image.tmdb.org/t/p/w500${item.poster_path}`}
+              src={`http://image.tmdb.org/t/p/w500${poster_path}`}
               alt={name}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-110"
+              className="object-center object-cover transition-transform duration-300 group-hover:scale-110"
             />
           ) : (
             <Image src="/images/placeholder.png" alt="" fill className="object-cover" />
           )}
         </div>
       </Link>
-      <div className="flex flex-col gap-3 px-2">
-        <Link href={link}>
-          <h5 className="text-Grey/50 font-semibold">{name}</h5>
+      <div className="flex justify-between items-center gap-1 mb-2">
+        <Link
+          href={getLink(type, name)}
+          className="text-sm md:text-base text-slate-900 dark:text-slate-100 text-ellipsis mb-1 sm:mb-2 line-clamp-1 cursor-pointer"
+        >
+          {name}
         </Link>
-        {action}
+        <p className="text-xs md:text-sm text-slate-600 dark:text-zinc-400">
+          {getReleaseYear(media)}
+        </p>
+      </div>
+      <div className="flex justify-between items-center">
+        <p className="text-xs md:text-sm text-slate-600 dark:text-zinc-400 text-ellipsis line-clamp-1">
+          {genre_ids?.map((id) => GENRES.find((g) => g.id === id)?.name).join(", ")}
+        </p>
+        <div className="flex justify-between items-center space-x-1">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-3 md:w-4 text-yellow-500 dark:text-yellow-600 -mt-[3px]"
+          >
+            <path
+              d="M8.243 7.34l-6.38 .925l-.113 .023a1 1 0 0 0 -.44 1.684l4.622 4.499l-1.09 6.355l-.013 .11a1 1 0 0 0 1.464 .944l5.706 -3l5.693 3l.1 .046a1 1 0 0 0 1.352 -1.1l-1.091 -6.355l4.624 -4.5l.078 -.085a1 1 0 0 0 -.633 -1.62l-6.38 -.926l-2.852 -5.78a1 1 0 0 0 -1.794 0l-2.853 5.78z"
+              fill="currentColor"
+              strokeWidth="0"
+            ></path>
+          </svg>
+          <p className="text-xs md:text-sm text-slate-600 dark:text-zinc-400">
+            {getRating(vote_average)}
+          </p>
+        </div>
       </div>
     </div>
   );

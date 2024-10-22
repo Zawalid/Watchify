@@ -9,17 +9,15 @@ export default function CardsList({
   items = [],
   emptyComponent,
 }: {
-  items: Item[];
+  items: TvShow[] | Movie[];
   emptyComponent: JSX.Element;
 }) {
   const { query } = useSearchQuery();
   const [parent] = useAutoAnimate({ duration: 400 });
 
-  const filteredItems = items.filter((item) =>
-    item.name.toLowerCase().includes(query.toLowerCase())
+  const filteredItems = items.filter((media) =>
+    media.name.toLowerCase().includes(query.toLowerCase())
   );
-
-  console.log(query, filteredItems);
 
   if (query && !filteredItems.length) return <NoResults />;
   if (!items?.length) return emptyComponent;
@@ -29,8 +27,8 @@ export default function CardsList({
       className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] items-start gap-5"
       ref={parent}
     >
-      {filteredItems.map((item) => (
-        <Card key={item.id} item={item} />
+      {filteredItems.map((media) => (
+        <Card key={media.id} media={media} />
       ))}
     </div>
   );

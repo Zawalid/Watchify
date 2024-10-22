@@ -6,11 +6,11 @@ export const getWatchList = async () => {
 };
 
 export const getMovies = async () => {
-  const movies: Item[] = (await customFetch("http://localhost:3001/api/watch_list/movies")).movies;
+  const movies: Movie[] = (await customFetch("http://localhost:3001/api/watch_list/movies")).movies;
   return movies;
 };
 
 export const getTvShows = async () => {
-  const shows: Item[] = (await customFetch("http://localhost:3001/api/watch_list/tv_shows")).shows;
+  const shows: TvShow[] = (await customFetch("http://localhost:3001/api/watch_list/tv_shows")).tvShows;
   return shows;
 };

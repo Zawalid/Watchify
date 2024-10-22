@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <div className="flex h-full flex-col justify-center items-center gap-6">
-      <div className="relative  w-1/2 h-60 xl:h-72">
+      <div className="relative  w-1/2 h-60">
         <Image src="/images/404.svg" alt="" fill />
       </div>
       <div className="flex flex-col items-center gap-1 text-center">

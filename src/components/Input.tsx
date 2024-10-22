@@ -95,14 +95,14 @@ const icons: Record<IconType, JSX.Element> = {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path
         d="M15.5799 11.9999C15.5799 13.9799 13.9799 15.5799 11.9999 15.5799C10.0199 15.5799 8.41992 13.9799 8.41992 11.9999C8.41992 10.0199 10.0199 8.41992 11.9999 8.41992C13.9799 8.41992 15.5799 10.0199 15.5799 11.9999Z"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M12.0001 20.27C15.5301 20.27 18.8201 18.19 21.1101 14.59C22.0101 13.18 22.0101 10.81 21.1101 9.39997C18.8201 5.79997 15.5301 3.71997 12.0001 3.71997C8.47009 3.71997 5.18009 5.79997 2.89009 9.39997C1.99009 10.81 1.99009 13.18 2.89009 14.59C5.18009 18.19 8.47009 20.27 12.0001 20.27Z"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -113,42 +113,42 @@ const icons: Record<IconType, JSX.Element> = {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
       <path
         d="M14.5299 9.47004L9.46992 14.53C8.81992 13.88 8.41992 12.99 8.41992 12C8.41992 10.02 10.0199 8.42004 11.9999 8.42004C12.9899 8.42004 13.8799 8.82004 14.5299 9.47004Z"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M17.8198 5.76998C16.0698 4.44998 14.0698 3.72998 11.9998 3.72998C8.46984 3.72998 5.17984 5.80998 2.88984 9.40998C1.98984 10.82 1.98984 13.19 2.88984 14.6C3.67984 15.84 4.59984 16.91 5.59984 17.77"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M8.41992 19.5301C9.55992 20.0101 10.7699 20.2701 11.9999 20.2701C15.5299 20.2701 18.8199 18.1901 21.1099 14.5901C22.0099 13.1801 22.0099 10.8101 21.1099 9.40005C20.7799 8.88005 20.4199 8.39005 20.0499 7.93005"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M15.5104 12.7C15.2504 14.11 14.1004 15.26 12.6904 15.52"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M9.47 14.53L2 22"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M22.0003 2L14.5303 9.47"
-        stroke="#475069"
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -216,12 +216,13 @@ const icons: Record<IconType, JSX.Element> = {
 };
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  children?: React.ReactNode;
   type?: IconType | "text";
   icon?: IconType;
   label?: string;
 }
 
-export default function Input({ type, icon, label, ...props }: InputProps) {
+export default function Input({ children, type, icon, label, ...props }: InputProps) {
   const [visible, setVisible] = useState<boolean>(false);
 
   const { className, value, onChange, placeholder } = props;
@@ -241,15 +242,17 @@ export default function Input({ type, icon, label, ...props }: InputProps) {
       <label className="absolute left-14 top-1/2 -z-10 -translate-y-1/2 cursor-text text-sm text-Grey/600 transition-all duration-300 peer-focus:z-10 peer-focus:-translate-y-6 peer-focus:text-Grey/400 peer-[&:not(:placeholder-shown)]:z-10 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-Grey/400">
         {label}
       </label>
+
       {type === "password" && (
         <button
-          className="absolute right-4 top-1/2 -translate-y-1/2"
+          className="absolute right-4 top-1/2 -translate-y-1/2 icon"
           type="button"
           onClick={() => setVisible((v) => !v)}
         >
           {visible ? icons.invisible : icons.visible}
         </button>
       )}
+      {children}
     </div>
   );
 }

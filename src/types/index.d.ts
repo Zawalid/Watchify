@@ -1,22 +1,3 @@
-declare type Item = {
-  id: number;
-  name: string;
-  original_name: string;
-  media_type: "movie" | "tv";
-  vote_average: number;
-  poster_path: string;
-  user_id?: string;
-};
-
-declare type Suggestion = {
-  suggestedTo: string;
-  suggestedBy: string;
-  suggestion: {
-    type: "movie" | "tv";
-    id: string;
-  };
-};
-
 // Navbar
 type Link = {
   label: string;
@@ -38,19 +19,18 @@ declare type IconType =
   | "visible"
   | "invisible"
   | "title"
-  | "link";
+  | "link" ;
 
-// TMDB Api
+
 declare type SearchResponse = {
   page: number;
-  results: Item[];
+  results: TvShow[] | Movie[];
   total_pages: number;
   total_results: number;
 };
 
-// API
 declare type WatchList = {
-  watchList: Item[];
+  watchList: TvShow[] | Movie[];
   all: number;
   movies: number;
   tv: number;

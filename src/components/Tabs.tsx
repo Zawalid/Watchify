@@ -3,6 +3,8 @@
 import { useState } from "react";
 import CardsList from "./CardsList";
 import { EmptyWatchList } from "./Status";
+import { getMediaType } from "@/lib/utils";
+import Link from "next/link";
 
 type Tab = {
   tab: "all" | "movie" | "tv";
@@ -14,8 +16,6 @@ export default function Tabs({ data }: { data: WatchList }) {
     tab: "all",
     indicator: { left: 8, width: 81 },
   });
-
-  console.log(data);
 
   const tabs = [
     { label: "All", value: "all", count: data.all },
@@ -40,7 +40,7 @@ export default function Tabs({ data }: { data: WatchList }) {
               }`}
               onClick={(e) => {
                 setCurrentTab({
-                  tab: value,
+                  tab: value as Tab["tab"],
                   indicator: {
                     left: (e.target as HTMLButtonElement).offsetLeft,
                     width: (e.target as HTMLButtonElement).offsetWidth,
@@ -55,14 +55,40 @@ export default function Tabs({ data }: { data: WatchList }) {
       </ul>
       <h3 className="text-2xl font-semibold text-Grey/400">
         {tabs.find((t) => t.value === currentTab.tab)?.label || "All"}
-        <span className="ml-1 text-sm">
+        <span className="ml-1 text-base">
           ({tabs.find((t) => t.value === currentTab.tab)?.count || 0})
         </span>
+        {currentTab.tab !== "all" && (
+          <sup>
+            <Link
+              href={currentTab.tab === "movie" ? "/movies" : "/tv-shows"}
+              className="icon inline-block"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="size-3"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"
+                />
+              </svg>
+            </Link>
+          </sup>
+        )}
       </h3>
       <CardsList
-        items={data.watchList.filter((item) =>
-          currentTab.tab === "all" ? true : item.media_type === currentTab.tab
-        )}
+        items={
+          data.watchList.filter((media) => {
+            const type = getMediaType(media);
+            return currentTab.tab === "all" ? true : type === currentTab.tab;
+          }) as TvShow[] | Movie[]
+        }
         emptyComponent={
           <EmptyWatchList
             type={

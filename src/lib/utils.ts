@@ -19,3 +19,24 @@ export const customFetch = async (url: string, options?: RequestInit) => {
     throw error;
   }
 };
+
+export const slugify = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+};
+
+export const getRating = (rating: number) => (rating % 1 === 0 ? rating : rating.toFixed(1));
+
+export const getReleaseYear = (media: TvShow | Movie) =>
+  new Date((media as Movie).release_date || (media as TvShow).first_air_date).getFullYear();
+
+export const getMediaType = (media: TvShow | Movie): "movie" | "tv" => {
+  if ((media as Movie).release_date !== undefined) {
+    return "movie";
+  } else if ((media as TvShow).first_air_date !== undefined) {
+    return "tv";
+  }
+  throw new Error("Unknown media type");
+};

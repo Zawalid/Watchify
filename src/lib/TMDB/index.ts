@@ -1,4 +1,4 @@
-import { getQueryString } from "./utils";
+import { getQueryString } from "../utils";
 
 const options = {
   url: "https://api.themoviedb.org/3",
@@ -18,9 +18,16 @@ export const search = async (query: string, page: number): Promise<SearchRespons
   return data;
 };
 
-export const getDetails = async (type: "movie" | "tv", id: string) => {
-  if (!type || !id) return;
-  const res = await fetch(`${options.url}/${type}/${id}`, { headers: options.headers });
-  const data = await res.json();
+export const getDetails = async (type: "movie" | "tv", slug: string) => {
+  if (!type || !slug) throw new Error("Type and Slug are required");
+  const res = await search(slug, 1);
+  const id = res.results?.[0]?.id;
+
+  if (!id) return null;
+
+  const details = await fetch(`${options.url}/${type}/${id}`, {
+    headers: options.headers,
+  });
+  const data: TvShow | Movie = await details.json();
   return data;
 };

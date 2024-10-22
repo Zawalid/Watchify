@@ -1,4 +1,4 @@
-import SearchInput  from "@/components/SearchInput";
+import SearchInput from "@/components/SearchInput";
 import Tabs from "@/components/Tabs";
 import { getWatchList } from "@/lib/api";
 
@@ -15,7 +15,7 @@ export default async function Page() {
           <br />
           Explore what I have watched and also feel free to make a suggestion. 😉
         </p>
-        <SearchInput label="Search Movies or TV Shows" placeholder="eg. Breaking Bad" />
+        <SearchInput label="Search Your Movies And TV Shows" placeholder="eg. Breaking Bad" />
       </div>
       <div className="flex flex-col gap-6">
         <Tabs data={data} />

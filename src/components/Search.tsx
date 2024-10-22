@@ -33,8 +33,8 @@ export default function Search({ title, description, reference }) {
           data={data?.pages.reduce((acc, page) => (page ? [...acc, ...page.results] : []), [])}
           isLoading={isLoading}
           error={error}
-          render={(item) => (
-            <Card key={item.id} item={item} action={<Action item={item} reference={reference} />} />
+          render={(media) => (
+            <Card key={media.id} media={media} action={<Action media={media} reference={reference} />} />
           )}
           displayNoResults={false}
         />
@@ -97,17 +97,17 @@ export default function Search({ title, description, reference }) {
   );
 }
 
-function Action({ item, reference }) {
+function Action({ media, reference }) {
   const { data } = useWatchList();
   const { mutate: addShow, isPending: isAdding, variables } = useAddShow();
   const { mutate: suggestShow, isPending: isSuggesting } = useSuggestShow();
 
   if (reference === "suggest") {
-    if (!item.suggested)
+    if (!media.suggested)
       return (
         <button
           className="text-Primary/400 hover:text-Primary/500 flex w-fit items-center gap-1.5 transition-colors duration-300"
-          onClick={() => suggestShow(item.id)}
+          onClick={() => suggestShow(media.id)}
           disabled={isSuggesting}
         >
           <svg
@@ -152,7 +152,7 @@ function Action({ item, reference }) {
     );
   }
 
-  if (data?.watchList.map((show) => show.id).includes(item.id)) {
+  if (data?.watchList.map((show) => show.id).includes(media.id)) {
     return (
       <div className="text-Success/400 flex w-fit items-center gap-1.5">
         <svg
@@ -216,11 +216,11 @@ function Action({ item, reference }) {
       className="text-Primary/400 hover:text-Primary/500 flex w-fit items-center gap-1.5 transition-colors duration-300"
       onClick={() =>
         addShow({
-          id: item.id,
-          type: item.media_type,
-          name: item.original_name || item.title,
-          rating: item.vote_average,
-          poster_path: item.poster_path,
+          id: media.id,
+          type: media.media_type,
+          name: media.original_name || media.title,
+          rating: media.vote_average,
+          poster_path: media.poster_path,
         })
       }
       disabled={isAdding}
@@ -248,7 +248,7 @@ function Action({ item, reference }) {
         />
       </svg>
       <span className="text-sm font-medium">
-        {isAdding && item.id === variables?.id ? "Adding..." : "Add to my list"}
+        {isAdding && media.id === variables?.id ? "Adding..." : "Add to my list"}
       </span>
     </button>
   );

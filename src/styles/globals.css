@@ -13,6 +13,8 @@
   @apply hidden
 }
 
+
+/* Sonnner */
 .sonner-toast {
   @apply backdrop-blur-2xl border-Grey/700 border text-Primary/50 bg-blur
 }
@@ -49,4 +51,9 @@
 .sonner-toast[data-type='loading'] [data-icon] {
   width: 20px;
   margin-right: 15px;
+}
+
+/* Classes */
+.icon {
+  @apply transition-colors duration-200 text-Grey/600 hover:text-Grey/400
 }

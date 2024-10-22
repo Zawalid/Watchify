@@ -9,9 +9,9 @@ type NavItemProps = {
 
 const links: Links = {
   authenticated: [
-    { label: "Dashboard", href: "/dashboard" },
+    { label: "Explore", href: "/explore" },
     { label: "Suggestions", href: "/suggestions" },
-    { label: "Add", href: "/add" },
+    { label: "Settings", href: "/settings" },
   ],
   unauthenticated: [
     { label: "Movies", href: "/movies" },
