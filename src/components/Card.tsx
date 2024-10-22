@@ -2,49 +2,58 @@ import { GENRES } from "@/lib/TMDB/config";
 import { getMediaType, getRating, getReleaseYear, slugify } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import placeholderImage from "@/images/placeholder.png";
+import { placeholder } from "@/lib/shimmer-placeholder";
 
 const getLink = (type: string, name: string) => {
   return `/${type === "tv" ? "tv-shows" : "movies"}/${slugify(name)}`;
 };
 
 export default function Card({ media }: { media: TvShow | Movie }) {
-  const { original_name, poster_path, vote_average, genre_ids } = media;
-  const name = (original_name || media.name) as string;
+  const { poster_path, vote_average, genre_ids } = media;
   const type = getMediaType(media);
+  const title = type === "movie" ? (media as Movie).title : (media as TvShow).name;
 
   return (
     <div className="flex flex-col">
       <Link
-        href={getLink(type, name)}
+        href={getLink(type, title)}
         className="w-full h-auto md:h-[250px] lg:h-[300px] mb-3 rounded-2xl"
       >
-        <div className="w-full h-[220px] md:h-[250px] lg:h-[300px] relative overflow-hidden shadow-lg rounded-2xl ">
+        <div className="w-full h-[220px] md:h-[250px] group lg:h-[300px] relative overflow-hidden shadow-lg rounded-2xl ">
           {media.poster_path ? (
             <Image
               src={`http://image.tmdb.org/t/p/w500${poster_path}`}
-              alt={name}
+              alt={title}
               fill
               className="object-center object-cover transition-transform duration-300 group-hover:scale-110"
+              placeholder={placeholder}
             />
           ) : (
-            <Image src="/images/placeholder.png" alt="" fill className="object-cover" />
+            <Image
+              src={placeholderImage}
+              placeholder={placeholder}
+              alt={title}
+              fill
+              className="object-cover"
+            />
           )}
         </div>
       </Link>
       <div className="flex justify-between items-center gap-1 mb-2">
         <Link
-          href={getLink(type, name)}
-          className="text-sm md:text-base text-slate-900 dark:text-slate-100 text-ellipsis mb-1 sm:mb-2 line-clamp-1 cursor-pointer"
+          href={getLink(type, title)}
+          className="text-sm md:text-base text-Primary/50 hover:text-Primary/200 text-ellipsis mb-1 sm:mb-2 line-clamp-1 cursor-pointer"
         >
-          {name}
+          {title}
         </Link>
-        <p className="text-xs md:text-sm text-slate-600 dark:text-zinc-400">
-          {getReleaseYear(media)}
-        </p>
+        <p className="text-xs md:text-sm text-Grey/300">{getReleaseYear(media)}</p>
       </div>
       <div className="flex justify-between items-center">
-        <p className="text-xs md:text-sm text-slate-600 dark:text-zinc-400 text-ellipsis line-clamp-1">
-          {genre_ids?.map((id) => GENRES.find((g) => g.id === id)?.name).join(", ")}
+        <p className="text-xs md:text-sm text-Grey/300 text-ellipsis line-clamp-1">
+          {genre_ids?.length
+            ? genre_ids?.map((id) => GENRES.find((g) => g.id === id)?.name).join(", ")
+            : "N/A"}
         </p>
         <div className="flex justify-between items-center space-x-1">
           <svg
@@ -66,7 +75,7 @@ export default function Card({ media }: { media: TvShow | Movie }) {
             ></path>
           </svg>
           <p className="text-xs md:text-sm text-slate-600 dark:text-zinc-400">
-            {getRating(vote_average)}
+            {getRating(vote_average || 0)}
           </p>
         </div>
       </div>

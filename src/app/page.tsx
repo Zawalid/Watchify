@@ -7,14 +7,8 @@ export default async function Page() {
 
   return (
     <div className="flex h-full flex-col gap-12">
-      <div className="flex w-fit flex-col gap-4">
-        <h1 className="text-4xl font-semibold text-Grey/50">Watchify</h1>
-        <p className="text-Grey/300 leading-relaxed">
-          List of movies and TV Shows, I, <span className="text-Primary/300">Walid Zakan</span> have
-          watched till date.
-          <br />
-          Explore what I have watched and also feel free to make a suggestion. 😉
-        </p>
+      <div className="flex w-1/2 flex-col gap-4">
+        <h1 className="text-4xl font-semibold text-Grey/50">Your Watch List</h1>
         <SearchInput label="Search Your Movies And TV Shows" placeholder="eg. Breaking Bad" />
       </div>
       <div className="flex flex-col gap-6">
@@ -23,3 +17,17 @@ export default async function Page() {
     </div>
   );
 }
+
+/* 
+
+ <p className="text-Grey/300 leading-relaxed">
+   List of movies and TV Shows, I, <span className="text-Primary/300">Walid Zakan</span> have
+   watched till date.
+   <br />
+   Explore what I have watched and also feel free to make a suggestion. 😉
+ </p>
+
+ <Link href="/" className="w-fit font-medium text-Primary/200">
+            Walid Zakan
+          </Link>
+*/

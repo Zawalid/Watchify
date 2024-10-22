@@ -1,7 +1,5 @@
 declare interface Media {
   id: number;
-  original_name?: string;
-  name: string;
   vote_average: number;
   backdrop_path: string;
   poster_path: string;
@@ -9,14 +7,19 @@ declare interface Media {
   genres: { id: number; name: string }[];
   genre_ids: number[];
   original_language: string;
+  media_type?: "tv" | "movie";
 }
 
 declare interface Movie extends Media {
+  original_title: string;
+  title: string;
   release_date: string;
   runtime: number;
 }
 
 declare interface TvShow extends Media {
+  original_name: string;
+  name: string;
   status: string;
   first_air_date: string;
   last_air_date: string;

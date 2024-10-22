@@ -1,18 +1,15 @@
+import { placeholder } from "@/lib/shimmer-placeholder";
 import { LANGUAGES } from "@/lib/TMDB/config";
 import { getMediaType, getRating, getReleaseYear } from "@/lib/utils";
 import Image from "next/image";
 
 export function Details({ media }: { media: TvShow | Movie }) {
-  const {
-    original_name,
-    name,
-    vote_average,
-    backdrop_path,
-    poster_path,
-    overview,
-    original_language,
-  } = media;
+  const { vote_average, backdrop_path, poster_path, overview, original_language } = media;
   const type = getMediaType(media);
+
+  const title = type === "movie" ? (media as Movie).title : (media as TvShow).name;
+  const original_title =
+    type === "movie" ? (media as Movie).original_title : (media as TvShow).original_name;
 
   return (
     <div className="flex h-full flex-col gap-12">
@@ -23,21 +20,26 @@ export function Details({ media }: { media: TvShow | Movie }) {
         }}
       >
         <div className="absolute -bottom-14 mobile:w-fit mobile:left-14 w-full left-0 flex flex-col gap-2 rounded-2xl border border-Grey/700 bg-[rgba(32,40,62,0.80)] px-10 py-5 backdrop-blur-md">
-          <span className="flex gap-1 text-sm text-Primary/200">
-            {getReleaseYear(media)} ●{" "}
-            {LANGUAGES.find((l) => l.iso_639_1 === original_language)?.english_name}
-            {}
-          </span>
-          <h3 className="text-2xl font-bold text-Grey/50">{original_name || name}</h3>
+          <div className="flex gap-2 text-sm text-Primary/200">
+            <span>{getReleaseYear(media)}</span>|
+            <span>{LANGUAGES.find((l) => l.iso_639_1 === original_language)?.english_name}</span>
+            {original_title !== title && (
+              <>
+                |<span>{original_title}</span>
+              </>
+            )}
+          </div>
+          <h3 className="text-2xl font-bold text-Grey/50">{title}</h3>
         </div>
       </div>
       <div className="flex items-center md:items-start flex-col-reverse md:flex-row gap-10 py-14">
-        <div className="relative h-full max-h-[650px] w-[400px]">
+        <div className="relative h-full max-h-[650px] min-h-[500px] w-[350px]">
           <Image
             src={`http://image.tmdb.org/t/p/original${poster_path}`}
-            alt={original_name || name}
+            alt={title}
             className="rounded-xl object-cover"
             fill
+            placeholder={placeholder}
           />
         </div>
         <div className="flex flex-col gap-4">
@@ -93,14 +95,6 @@ function MovieDetails({ details }: { details: Movie }) {
       <div className="flex flex-col gap-2">
         <span className="text-sm text-Grey/400">Run time</span>
         <span className="text-Grey/100">{Number(runtime) ? runtime : 0} min</span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="text-sm text-Grey/400">Genres</span>
-        {genres.map((g) => (
-          <span key={g.id} className="bg-slate-400 text-Grey/100">
-            {g.name}
-          </span>
-        ))}
       </div>
     </>
   );

@@ -27,12 +27,13 @@ export const slugify = (text: string) => {
     .replace(/[^a-z0-9-]/g, "");
 };
 
-export const getRating = (rating: number) => (rating % 1 === 0 ? rating : rating.toFixed(1));
+export const getRating = (rating: number) => rating % 1 === 0 ? rating : rating.toFixed(1)
 
 export const getReleaseYear = (media: TvShow | Movie) =>
   new Date((media as Movie).release_date || (media as TvShow).first_air_date).getFullYear();
 
 export const getMediaType = (media: TvShow | Movie): "movie" | "tv" => {
+  if(media.media_type) return media.media_type;
   if ((media as Movie).release_date !== undefined) {
     return "movie";
   } else if ((media as TvShow).first_air_date !== undefined) {
@@ -40,3 +41,4 @@ export const getMediaType = (media: TvShow | Movie): "movie" | "tv" => {
   }
   throw new Error("Unknown media type");
 };
+

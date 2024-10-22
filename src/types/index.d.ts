@@ -22,7 +22,7 @@ declare type IconType =
   | "link" ;
 
 
-declare type SearchResponse = {
+declare type TMDBResponse = {
   page: number;
   results: TvShow[] | Movie[];
   total_pages: number;

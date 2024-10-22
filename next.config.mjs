@@ -10,6 +10,25 @@ const nextConfig = {
       },
     ],
   },
+  redirects: async () => {
+    return [
+      {
+        source: "/explore",
+        destination: "/explore/movies/popular",
+        permanent: true,
+      },
+      {
+        source: "/explore/movies",
+        destination: "/explore/movies/popular",
+        permanent: true,
+      },
+      {
+        source: "/explore/tv-shows",
+        destination: "/explore/tv-shows/popular",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
