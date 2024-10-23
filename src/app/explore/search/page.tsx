@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import CardsList from "@/components/CardsList";
 import { search } from "@/lib/TMDB";
 

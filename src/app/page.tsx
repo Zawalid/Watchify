@@ -1,3 +1,5 @@
+export const revalidate = 60 * 30;
+
 import SearchInput from "@/components/SearchInput";
 import Tabs from "@/components/Tabs";
 import { getWatchList } from "@/lib/api";
