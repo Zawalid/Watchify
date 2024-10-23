@@ -1,4 +1,4 @@
-export const revalidate = 60 * 30;
+export const dynamic = 'force-dynamic'
 
 import SearchInput from "@/components/SearchInput";
 import Tabs from "@/components/Tabs";
