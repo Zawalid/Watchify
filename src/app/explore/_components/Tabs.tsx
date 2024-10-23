@@ -48,8 +48,8 @@ export default function Tabs({ tabs }: { tabs: TabItem[] }) {
       {tabs.map(({ label, value, link }) => (
         <li key={value} id={value}>
           <button
-            className={`px-8 py-2 text-sm font-medium ${
-              currentTab.tab === value ? "text-Primary/50" : "text-Grey/300"
+            className={`px-8 py-2 text-sm transition-colors duration-200 font-medium ${
+              currentTab.tab === value ? "text-Primary/50" : "text-Grey/300 hover:text-Grey/600"
             }`}
             onClick={() => {
               setCurrentTab({ tab: value, indicator: TABS_INDICATORS[value] });

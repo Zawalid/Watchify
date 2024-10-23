@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import CardsList from "../components/CardsList";
-import { EmptyWatchList } from "../components/Status";
-import { getMediaType } from "@/lib/utils";
+// import { EmptyWatchList } from "../components/Status";
+// import { getMediaType } from "@/lib/utils";
 import Link from "next/link";
 
 type Tab = {
@@ -11,16 +11,16 @@ type Tab = {
   indicator: { left: number; width: number };
 };
 
-export default function Tabs({ data }: { data: WatchList }) {
+export default function Tabs({ data }: { data: TMDBResponse }) {
   const [currentTab, setCurrentTab] = useState<Tab>({
     tab: "all",
     indicator: { left: 8, width: 81 },
   });
 
   const tabs = [
-    { label: "All", value: "all", count: data.all },
-    { label: "Movies", value: "movie", count: data.movies },
-    { label: "TV Shows", value: "tv", count: data.tv },
+    { label: "All", value: "all", count: data.results.length },
+    { label: "Movies", value: "movie", count: data.results.length },
+    { label: "TV Shows", value: "tv", count: data.results.length },
   ];
   return (
     <>
@@ -35,8 +35,8 @@ export default function Tabs({ data }: { data: WatchList }) {
         {tabs.map(({ label, value }) => (
           <li key={value}>
             <button
-              className={`px-8 py-2 text-sm font-medium ${
-                currentTab.tab === value ? "text-Primary/50" : "text-Grey/300"
+              className={`px-8 py-2 text-sm transition-colors duration-200 font-medium ${
+                currentTab.tab === value ? "text-Primary/50" : "text-Grey/300 hover:text-Grey/600"
               }`}
               onClick={(e) => {
                 setCurrentTab({
@@ -84,20 +84,21 @@ export default function Tabs({ data }: { data: WatchList }) {
       </h3>
       <CardsList
         data={
-          data.watchList.filter((media) => {
-            const type = getMediaType(media);
-            return currentTab.tab === "all" ? true : type === currentTab.tab;
-          }) as TvShow[] | Movie[]
+          // data.results.filter((media) => {
+          //   const type = getMediaType(media);
+          //   return currentTab.tab === "all" ? true : type === currentTab.tab;
+          // }) as TvShow[] | Movie[]
+          data
         }
-        emptyComponent={
-          <EmptyWatchList
-            type={
-              data.all !== 0
-                ? tabs.find((t) => t.value === currentTab.tab)?.label.toLowerCase()
-                : "all"
-            }
-          />
-        }
+        // emptyComponent={
+        //   <EmptyWatchList
+        //     type={
+        //       data.all !== 0
+        //         ? tabs.find((t) => t.value === currentTab.tab)?.label.toLowerCase()
+        //         : "all"
+        //     }
+        //   />
+        // }
       />
     </>
   );

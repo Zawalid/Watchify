@@ -1,16 +1,17 @@
-import { customFetch } from "./utils";
+import { getPopularTvShows } from "./TMDB";
+// import { customFetch } from "./utils";
 
 export const getWatchList = async () => {
-  const watchList: WatchList = await customFetch("http://localhost:3001/api/watch_list");
+  const watchList: TMDBResponse = await getPopularTvShows();
   return watchList;
 };
 
 export const getMovies = async () => {
-  const movies: Movie[] = (await customFetch("http://localhost:3001/api/watch_list/movies")).movies;
+  const movies: TMDBResponse = await getPopularTvShows();
   return movies;
 };
 
 export const getTvShows = async () => {
-  const shows: TvShow[] = (await customFetch("http://localhost:3001/api/watch_list/tv_shows")).tvShows;
+  const shows: TMDBResponse = await getPopularTvShows();
   return shows;
 };

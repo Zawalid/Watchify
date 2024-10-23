@@ -11,6 +11,7 @@
 - [ ] Pages transition animation
 - [ ] Custom metadata of each page
 - [ ] Explore dropdown
+- [ ] Remove tabs repition
 
 
 

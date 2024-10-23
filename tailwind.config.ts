@@ -1,10 +1,12 @@
 import type { Config } from "tailwindcss";
+import { nextui } from "@nextui-org/theme";
 
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -129,6 +131,28 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  darkMode: "class",
+  plugins: [
+    nextui({
+      themes: {
+        dark: {
+          colors: {
+            primary: {
+              "50": "#ebe9fe",
+              "100": "#a5dbfe",
+              "200": "#a5dbfe",
+              "300": "#78c8fd",
+              "400": "#4bb7fd",
+              "500": "#1ea5fc",
+              "600": "#1884ca",
+              "700": "#126297",
+              "800": "#0c4265",
+              "900": "#062032",
+            },
+          },
+        },
+      },
+    }),
+  ],
 };
 export default config;

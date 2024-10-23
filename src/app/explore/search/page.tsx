@@ -17,5 +17,5 @@ export default async function Page({ searchParams }: { searchParams: { query: st
     );
   }
 
-  return <CardsList data={data.results} />;
+  return <CardsList data={data} />;
 }

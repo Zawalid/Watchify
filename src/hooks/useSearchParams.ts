@@ -7,9 +7,9 @@ export const useSearchParams = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const setSearchParams = (key: string, value: string | null) => {
+  const setSearchParams = (key: string, value: string | null, delete_condition?: boolean) => {
     const params = new URLSearchParams(searchParams);
-    if (!value) params.delete(key);
+    if (!value || delete_condition) params.delete(key);
     else params.set(key, value);
 
     console.log(key, value, params);
