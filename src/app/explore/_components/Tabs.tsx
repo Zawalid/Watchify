@@ -1,6 +1,7 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type TabState = { tab: string; indicator: { left: number; width: number } };
@@ -28,7 +29,6 @@ const getTab = (tabs: TabItem[], pathname: string) => {
 export default function Tabs({ tabs }: { tabs: TabItem[] }) {
   const pathname = usePathname();
   const [currentTab, setCurrentTab] = useState<TabState>(() => getTab(tabs, pathname));
-  const router = useRouter();
 
   useEffect(() => {
     const newTab = getTab(tabs, pathname);
@@ -45,21 +45,39 @@ export default function Tabs({ tabs }: { tabs: TabItem[] }) {
           width: `${currentTab.indicator.width}px`,
         }}
       ></div>
-      {tabs.map(({ label, value, link }) => (
-        <li key={value} id={value}>
-          <button
-            className={`px-8 py-2 text-sm transition-colors duration-200 font-medium ${
-              currentTab.tab === value ? "text-Primary/50" : "text-Grey/300 hover:text-Grey/600"
-            }`}
-            onClick={() => {
-              setCurrentTab({ tab: value, indicator: TABS_INDICATORS[value] });
-              if (link) router.replace(`/explore${link}`);
-            }}
-          >
-            {label}
-          </button>
-        </li>
-      ))}
+      {tabs.map((tab) => {
+        const props = { tab, currentTab, setCurrentTab };
+        return tab.link ? (
+          <Link href={`/explore${tab.link}`} key={tab.label}>
+            <Tab {...props} />
+          </Link>
+        ) : (
+          <li key={tab.label}>
+            <Tab {...props} />
+          </li>
+        );
+      })}
     </ul>
+  );
+}
+
+function Tab({
+  tab,
+  currentTab,
+  setCurrentTab,
+}: {
+  tab: TabItem;
+  currentTab: TabState;
+  setCurrentTab: (tab: TabState) => void;
+}) {
+  return (
+    <button
+      className={`px-8 py-2 text-sm transition-colors duration-200 font-medium ${
+        currentTab.tab === tab.value ? "text-Primary/50" : "text-Grey/300 hover:text-Grey/600"
+      }`}
+      onClick={() => setCurrentTab({ tab: tab.value, indicator: TABS_INDICATORS[tab.value] })}
+    >
+      {tab.label}
+    </button>
   );
 }

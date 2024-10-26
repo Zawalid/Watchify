@@ -1,6 +1,7 @@
-'use client';
+"use client";
 
-import  { ButtonHTMLAttributes, ReactNode } from 'react';
+import { cn } from "@/lib/utils";
+import { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -8,15 +9,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick?: () => void;
 }
 
-export default function Button({
-  children,
-  className = "",
-  onClick,
-  ...props
-}: ButtonProps) {
+export default function Button({ children, className = "", onClick, ...props }: ButtonProps) {
   return (
     <button
-      className={`text-text-primary grid place-content-center rounded-xl disabled:cursor-not-allowed disabled:text-White/30 disabled:bg-White/40 bg-Primary/400 px-8 py-3 text-White/100 transition-colors duration-300 hover:bg-Primary/500 ${className}`}
+      className={cn(
+        "text-text-primary grid place-content-center rounded-xl disabled:cursor-not-allowed disabled:text-White/30 disabled:bg-White/40 bg-Primary/400 px-8 py-3 text-White/100 transition-colors duration-300 hover:bg-Primary/500",
+        className
+      )}
       onClick={() => onClick?.()}
       {...props}
     >

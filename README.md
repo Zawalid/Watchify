@@ -21,3 +21,12 @@
 
 - [ ] Trending movies and tv shows
 - [ ] Filtering / Sorting
+
+
+---
+
+# Goals
+
+- [ ] Learn NextJs
+- [ ] Learn Typescript
+- [ ] Learn Framer Motion

@@ -1,6 +1,12 @@
 import Button from "@/components/Button";
+import exp from "constants";
 import Image from "next/image";
 import Link from "next/link";
+
+export const metadata = {
+  title: "Not Found",
+  description: "Page not found",
+};
 
 export default function NotFound() {
   return (

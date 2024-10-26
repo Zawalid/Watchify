@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchQuery } from "@/hooks/useSearchParams";
+import { useSearchParams } from "@/hooks/useSearchParams";
 import Input, { InputProps } from "./Input";
 import Button from "./Button";
 
@@ -10,17 +10,15 @@ interface Props extends InputProps {
 }
 
 export default function SearchInput({ parentClassName, ...props }: Props) {
-  const { query, setQuery } = useSearchQuery();
-  const [value, setValue] = useState<string>(query);
+  const { searchParams, setSearchParams } = useSearchParams();
+  const [value, setValue] = useState<string>(searchParams.get("query") || "");
 
+  const setQuery = (query: string) => setSearchParams({ query, page: "" });
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (value) {
-          setQuery(value);
-          window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-        }
+        if (value) setQuery(value);
       }}
       className={`flex gap-2 ${parentClassName}`}
     >

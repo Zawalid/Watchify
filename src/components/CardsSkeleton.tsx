@@ -14,7 +14,7 @@ function CardSkeleton() {
   );
 }
 
-export default function CardsSkeleton({ length = 8 }: { length?: number }) {
+export default function CardsSkeleton({ length = 10 }: { length?: number }) {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] items-start gap-5">
       {Array.from({ length }).map((_, i) => (

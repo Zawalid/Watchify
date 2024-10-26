@@ -23,7 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       >
         <Navbar />
         <Providers>
-          <main className="h-full grid container flex-1 py-4">{children}</main>
+          <main className="container py-4">{children}</main>
         </Providers>
       </body>
     </html>

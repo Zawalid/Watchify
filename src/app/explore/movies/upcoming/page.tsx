@@ -1,7 +1,9 @@
-import CardsList from "@/components/CardsList";
 import { getUpcomingMovies } from "@/lib/TMDB";
+import WithPagination from "../../_components/WithPagination";
 
-export default async function Page() {
-  const data = await getUpcomingMovies();
-  return <CardsList data={data} />;
-}
+export const metadata = {
+  title: "Upcoming Movies",
+  description: "List of upcoming movies",
+};
+
+export default WithPagination(getUpcomingMovies);

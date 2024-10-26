@@ -1,7 +1,9 @@
-import CardsList from "@/components/CardsList";
 import { getAiringTodayTvShows } from "@/lib/TMDB";
+import WithPagination from "../../_components/WithPagination";
 
-export default async function Page() {
-  const data = await getAiringTodayTvShows();
-  return <CardsList data={data} />;
-}
+export const metadata = {
+  title: "Airing Today TV Shows",
+  description: "List of TV shows airing today",
+};
+
+export default WithPagination(getAiringTodayTvShows);

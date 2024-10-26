@@ -1,7 +1,9 @@
-import CardsList from "@/components/CardsList";
 import { getPopularMovies } from "@/lib/TMDB";
+import WithPagination from "../../_components/WithPagination";
 
-export default async function Page() {
-  const data = await getPopularMovies();
-  return <CardsList data={data} />;
-}
+export const metadata = {
+  title: "Popular Movies",
+  description: "List of popular movies",
+};
+
+export default WithPagination(getPopularMovies);

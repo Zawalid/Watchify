@@ -39,10 +39,10 @@ export default function CardsList({
         ))}
       </div>
       <Pagination
-        total={data.total_pages}
+        total={Math.min(data.total_pages, 500)} // Because te TMDB API only allows up to 500 pages
         page={page}
         siblings={2}
-        onChange={(page) => setSearchParams("page", String(page),page === 1)}
+        onChange={(page) => setSearchParams("page", String(page), page === 1)}
       />
     </>
   );

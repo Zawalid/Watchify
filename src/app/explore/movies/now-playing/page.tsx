@@ -1,7 +1,9 @@
-import CardsList from "@/components/CardsList";
 import { getNowPlayingMovies } from "@/lib/TMDB";
+import withCustomPage from "../../_components/WithPagination";
 
-export default async function Page() {
-  const data = await getNowPlayingMovies();
-  return <CardsList data={data} />;
-}
+export const metadata = {
+  title: "Now Playing Movies",
+  description: "List of now playing movies",
+};
+
+export default withCustomPage(getNowPlayingMovies);

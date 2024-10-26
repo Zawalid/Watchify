@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const icons: Record<IconType, JSX.Element> = {
@@ -228,7 +229,7 @@ export default function Input({ children, type, icon, label, ...props }: InputPr
   const { className, value, onChange, placeholder } = props;
 
   return (
-    <div className={`relative rounded-xl ${className}`}>
+    <div className={cn("relative rounded-xl", className)}>
       <span className="absolute left-4 top-1/2 -translate-y-1/2 text-Grey/600">
         {icons[type as IconType] || (icon && icons[icon])}
       </span>
@@ -239,7 +240,7 @@ export default function Input({ children, type, icon, label, ...props }: InputPr
         value={value}
         onChange={onChange}
       />
-      <label className="absolute left-14 top-1/2 -z-10 -translate-y-1/2 cursor-text text-sm text-Grey/600 transition-all duration-300 peer-focus:z-10 peer-focus:-translate-y-6 peer-focus:text-Grey/400 peer-[&:not(:placeholder-shown)]:z-10 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-Grey/400">
+      <label className="absolute left-14 top-1/2 z-10 -translate-y-1/2 cursor-text text-sm text-Grey/600 transition-all duration-300 peer-focus:z-10 peer-focus:-translate-y-6 peer-focus:text-Grey/400 peer-[&:not(:placeholder-shown)]:z-10 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-Grey/400">
         {label}
       </label>
 

@@ -1,8 +1,13 @@
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 import SearchInput from "@/components/SearchInput";
 import Tabs from "@/components/Tabs";
 import { getWatchList } from "@/lib/api";
+
+export const metadata = {
+  title: "Watch List",
+  description: "List of movies and TV Shows, I, Walid Zakan have watched till date.",
+};
 
 export default async function Page() {
   const data = await getWatchList();
