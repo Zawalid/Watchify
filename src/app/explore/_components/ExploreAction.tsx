@@ -1,11 +1,15 @@
 "use client";
 
-import SearchInput from "@/components/SearchInput";
+import SearchForm from "@/components/Forms/SearchForm";
 import Tabs from "./Tabs";
 import { usePathname } from "next/navigation";
+import { useSearchParams } from "@/hooks/useSearchParams";
 
 export function ExploreAction() {
   const pathname = usePathname();
+  const { searchParams } = useSearchParams();
+
+  console.log(searchParams.get("query"));
 
   const currentPage = pathname.includes("movies")
     ? "movies"
@@ -39,10 +43,11 @@ export function ExploreAction() {
         );
       case "search":
         return (
-          <SearchInput
+          <SearchForm
             label="Search For Movies Or TV Shows"
             placeholder="eg. The Wire"
             parentClassName="w-1/2"
+            query={searchParams.get("query") || ""}
           />
         );
     }

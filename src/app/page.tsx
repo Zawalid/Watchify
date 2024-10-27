@@ -1,4 +1,4 @@
-import SearchInput from "@/components/SearchInput";
+import SearchForm from "@/components/Forms/SearchForm";
 import Tabs from "@/components/Tabs";
 import { getWatchList } from "@/lib/api";
 
@@ -14,7 +14,7 @@ export default async function Page() {
     <div className="flex h-full flex-col gap-12">
       <div className="flex w-1/2 flex-col gap-4">
         <h1 className="text-4xl font-semibold text-Grey/50">Your Watch List</h1>
-        <SearchInput label="Search Your Movies And TV Shows" placeholder="eg. Breaking Bad" />
+        <SearchForm label="Search Your Movies And TV Shows" placeholder="eg. Breaking Bad" />
       </div>
       <div className="flex flex-col gap-6">
         <Tabs data={data} />
