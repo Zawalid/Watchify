@@ -1,6 +1,5 @@
 import Form from "next/form";
 import Input, { InputProps } from "../Input";
-import Button from "../Button";
 import SearchButton, { ResetButton } from "./SearchFormButtons";
 
 interface Props extends InputProps {

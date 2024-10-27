@@ -82,6 +82,7 @@ export default function Tabs({ data }: { data: TMDBResponse }) {
           </sup>
         )}
       </h3>
+      
       <CardsList
         data={
           // data.results.filter((media) => {

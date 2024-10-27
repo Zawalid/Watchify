@@ -1,24 +1,21 @@
 "use client";
+
+import { Suspense, type JSX } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { NoResults } from "./Status";
 import Card from "./Card";
 import { getMediaType } from "@/lib/utils";
 import Pagination from "./Pagination";
-
-import type { JSX } from "react";
 import { useSearchParams } from "@/hooks/useSearchParams";
 
-export default function CardsList({
-  data,
-  emptyComponent,
-  query = "",
-  page,
-}: {
+type Props = {
   data: TMDBResponse;
   query?: string;
   page?: number;
   emptyComponent?: JSX.Element;
-}) {
+};
+
+function List({ data, emptyComponent, query = "", page }: Props) {
   const [parent] = useAutoAnimate({ duration: 400 });
   const { setSearchParams } = useSearchParams();
 
@@ -47,5 +44,13 @@ export default function CardsList({
         onChange={(page) => setSearchParams("page", String(page), page === 1)}
       />
     </>
+  );
+}
+
+export default function CardsList(props: Props) {
+  return (
+    <Suspense fallback={<div>Loading cards....</div>}>
+      <List {...props} />
+    </Suspense>
   );
 }

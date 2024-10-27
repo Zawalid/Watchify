@@ -9,8 +9,6 @@ export function ExploreAction() {
   const pathname = usePathname();
   const { searchParams } = useSearchParams();
 
-  console.log(searchParams.get("query"));
-
   const currentPage = pathname.includes("movies")
     ? "movies"
     : pathname.includes("tv-shows")

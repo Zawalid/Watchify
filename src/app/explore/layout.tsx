@@ -1,5 +1,6 @@
 import Tabs from "@/app/explore/_components/Tabs";
 import { ExploreAction } from "./_components/ExploreAction";
+import { Suspense } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +20,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           Browse a wide variety of movies and TV shows. Find new favorites to watch and enjoy.
         </p>
       </div>
-      <ExploreAction />
+      <Suspense fallback={<div>Loading...</div>}>
+        <ExploreAction />
+      </Suspense>
       {children}
     </div>
   );
