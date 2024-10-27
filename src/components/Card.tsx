@@ -47,7 +47,7 @@ export default function Card({ media }: { media: TvShow | Movie }) {
         >
           {title}
         </Link>
-        <p className="text-xs md:text-sm text-Grey/300">{getReleaseYear(media)}</p>
+        <p className="text-xs md:text-sm text-Grey/300">{getReleaseYear(media) || "N/A"}</p>
       </div>
       <div className="flex justify-between items-center">
         <p className="text-xs md:text-sm text-Grey/300 text-ellipsis line-clamp-1">

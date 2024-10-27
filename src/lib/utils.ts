@@ -37,7 +37,7 @@ export const slugify = (text: string) => {
 
 export const getRating = (rating: number) => (rating % 1 === 0 ? rating : rating.toFixed(1));
 
-export const getReleaseYear = (media: TvShow | Movie) =>
+export const getReleaseYear = (media: TvShow | Movie) => 
   new Date((media as Movie).release_date || (media as TvShow).first_air_date).getFullYear();
 
 export const getMediaType = (media: TvShow | Movie): "movie" | "tv" => {

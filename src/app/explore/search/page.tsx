@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 import CardsList from "@/components/CardsList";
 import { search } from "@/lib/TMDB";
@@ -12,9 +12,8 @@ export default async function Page(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;
 }) {
   const searchParams = await props.searchParams;
-  const query = searchParams?.query || "";
+  const query = (searchParams?.query || "").trim();
   const page = Number(searchParams?.page) || 1;
-  const data = await search(query, page);
 
   if (!query) {
     return (
@@ -28,5 +27,7 @@ export default async function Page(props: {
     );
   }
 
-  return <CardsList data={data} />;
+  const data = await search(query, page);
+
+  return <CardsList data={data} query={query} page={page} />;
 }

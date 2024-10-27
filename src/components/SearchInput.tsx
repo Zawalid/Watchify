@@ -18,7 +18,7 @@ export default function SearchInput({ parentClassName, ...props }: Props) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (value) setQuery(value);
+        if (value) setQuery(value.trim().replace(/\s+/g, " "));
       }}
       className={`flex gap-2 ${parentClassName}`}
     >

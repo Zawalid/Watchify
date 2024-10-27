@@ -1,24 +1,26 @@
 "use client";
-
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { NoResults } from "./Status";
-import { useSearchParams } from "@/hooks/useSearchParams";
 import Card from "./Card";
 import { getMediaType } from "@/lib/utils";
 import Pagination from "./Pagination";
 
+import type { JSX } from "react";
+import { useSearchParams } from "@/hooks/useSearchParams";
+
 export default function CardsList({
   data,
   emptyComponent,
+  query = "",
+  page,
 }: {
   data: TMDBResponse;
+  query?: string;
+  page?: number;
   emptyComponent?: JSX.Element;
 }) {
-  const { searchParams, setSearchParams } = useSearchParams();
   const [parent] = useAutoAnimate({ duration: 400 });
-
-  const query = searchParams.get("query") || "";
-  const page = Number(searchParams.get("page") || data.page);
+  const { setSearchParams } = useSearchParams();
 
   const filteredData = data.results.filter((media) => {
     const title = getMediaType(media) === "movie" ? (media as Movie).title : (media as TvShow).name;
@@ -40,7 +42,7 @@ export default function CardsList({
       </div>
       <Pagination
         total={Math.min(data.total_pages, 500)} // Because te TMDB API only allows up to 500 pages
-        page={page}
+        page={page || data.page}
         siblings={2}
         onChange={(page) => setSearchParams("page", String(page), page === 1)}
       />

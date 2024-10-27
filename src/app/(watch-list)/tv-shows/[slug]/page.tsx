@@ -2,7 +2,8 @@ import { getDetails } from "@/lib/TMDB";
 import { notFound } from "next/navigation";
 import { Details } from "../../Details";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const { slug } = params;
   const tvShow = await getDetails("tv", slug);
 
@@ -11,7 +12,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const { slug } = params;
   const tvShow = await getDetails("tv", slug);
 

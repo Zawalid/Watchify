@@ -2,7 +2,8 @@ import { getDetails } from "@/lib/TMDB";
 import { notFound } from "next/navigation";
 import { Details } from "../../Details";
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const { slug } = params;
   const movie = await getDetails("movie", slug);
 
