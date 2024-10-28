@@ -81,7 +81,7 @@ function NavItem({ label, href, icon }: NavItemProps) {
 }
 
 export default function Navbar() {
-  const isAuthenticated: boolean = true;
+  const isAuthenticated: boolean = false;
 
   return (
     <nav className="bg-blur sticky top-0 z-30 mb-12 py-3 backdrop-blur-lg">
