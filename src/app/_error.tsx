@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Button";
+import { Button } from "@nextui-org/button";
 import Image from "next/image";
 
 export default function Error({ error, reset }: { error: Error; reset: () => void }) {
@@ -13,7 +13,7 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
         Sorry, Something went wrong
       </h2>
       <p className="text-Grey/300 font-medium">{error.message}</p>
-      <Button onClick={reset}>Try again</Button>
+      <Button color="primary" size="lg" onPress={reset}>Try again</Button>
     </div>
   );
 }

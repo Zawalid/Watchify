@@ -98,6 +98,7 @@ const config: Config = {
         "White/75": "rgba(255, 255, 255, 0.75)",
         "White/100": "rgba(255, 255, 255, 1)",
         blur: "rgba(18, 24, 41, 0.80)",
+        border: "#292f46",
       },
       fontSize: {
         xs: "0.75rem",
@@ -137,18 +138,11 @@ const config: Config = {
       themes: {
         dark: {
           colors: {
-            primary: {
-              "50": "#ebe9fe",
-              "100": "#a5dbfe",
-              "200": "#a5dbfe",
-              "300": "#78c8fd",
-              "400": "#4bb7fd",
-              "500": "#1ea5fc",
-              "600": "#1884ca",
-              "700": "#126297",
-              "800": "#0c4265",
-              "900": "#062032",
-            },
+            primary: { DEFAULT: "#5a4af4" },
+            secondary: { DEFAULT: "#1ea5fc" },
+            success: { DEFAULT: "#05ce91" },
+            danger: { DEFAULT: "#ff6161" },
+            warning: { DEFAULT: "#ffad49" },
           },
         },
       },

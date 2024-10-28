@@ -57,3 +57,7 @@
 .icon {
   @apply transition-colors duration-200 text-Grey/600 hover:text-Grey/400
 }
+
+.blur-bg {
+  @apply bg-[url('/images/Background.svg')] bg-cover bg-no-repeat bg-Grey/900
+}

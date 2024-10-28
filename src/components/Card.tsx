@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import placeholderImage from "@/images/placeholder.png";
 import { placeholder } from "@/lib/shimmer-placeholder";
+import CardActions from "./CardActions";
 
 const getLink = (type: string, name: string) => {
   return `/${type === "tv" ? "tv-shows" : "movies"}/${slugify(name)}`;
@@ -15,12 +16,13 @@ export default function Card({ media }: { media: TvShow | Movie }) {
   const title = type === "movie" ? (media as Movie).title : (media as TvShow).name;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col group relative">
+      <CardActions />
       <Link
         href={getLink(type, title)}
         className="w-full h-auto md:h-[250px] lg:h-[300px] mb-3 rounded-2xl"
       >
-        <div className="w-full h-[220px] md:h-[250px] group lg:h-[300px] relative overflow-hidden shadow-lg rounded-2xl ">
+        <div className="w-full h-[220px] md:h-[250px]  lg:h-[300px] relative overflow-hidden shadow-lg rounded-2xl ">
           {media.poster_path ? (
             <Image
               src={`http://image.tmdb.org/t/p/w500${poster_path}`}

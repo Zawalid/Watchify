@@ -1,7 +1,7 @@
-import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Image from "next/image";
 import loginImage from "@/images/login.svg";
+import { Button } from "@nextui-org/button";
 
 export default function Page() {
   return (
@@ -38,6 +38,7 @@ export default function Page() {
           />
           <Button
             className="mt-6 w-full"
+            color="primary"
             //   disabled={isPending}
           >
             Login

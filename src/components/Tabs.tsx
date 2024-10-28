@@ -53,7 +53,7 @@ export default function Tabs({ data }: { data: TMDBResponse }) {
           </li>
         ))}
       </ul>
-      <h3 className="text-2xl font-semibold text-Grey/400">
+      <h2 className="text-2xl font-semibold text-Grey/400">
         {tabs.find((t) => t.value === currentTab.tab)?.label || "All"}
         <span className="ml-1 text-base">
           ({tabs.find((t) => t.value === currentTab.tab)?.count || 0})
@@ -81,7 +81,7 @@ export default function Tabs({ data }: { data: TMDBResponse }) {
             </Link>
           </sup>
         )}
-      </h3>
+      </h2>
       
       <CardsList
         data={

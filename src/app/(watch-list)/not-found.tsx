@@ -1,6 +1,6 @@
 "use client";
 
-import Button from "@/components/Button";
+import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,7 +24,9 @@ export default function NotFound() {
           Please check the URL or go back.
         </p>
         <Link href={pathname.includes("/movies") ? "/movies" : "/tv-shows"}>
-          <Button className="mt-6">Go Back</Button>
+          <Button className="mt-6" color="primary" size="lg">
+            Go Back
+          </Button>
         </Link>
       </div>
     </div>

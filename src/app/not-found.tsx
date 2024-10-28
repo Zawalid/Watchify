@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ export default function NotFound() {
           exist.
         </p>
         <Link href="/">
-          <Button className="mt-6">Go Home</Button>
+          <Button className="mt-6" color="primary" size="lg">Go Home</Button>
         </Link>
       </div>
     </div>

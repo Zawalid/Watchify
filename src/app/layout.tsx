@@ -19,7 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="bg-Grey/900">
       <body
-        className={`${chewy.className} dark antialiased h-full  flex-col min-h-dvh  flex bg-[url('/images/Background.svg')] bg-cover bg-no-repeat bg-Grey/900`}
+        className={`${chewy.className} dark antialiased h-full  flex-col min-h-dvh  flex bg-[url('/images/Background.svg')] blur-bg`}
       >
         <Navbar />
         <Providers>

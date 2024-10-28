@@ -1,8 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+
 
 type TabState = { tab: string; indicator: { left: number; width: number } };
 type TabItem = { label: string; value: string; link: string };
@@ -38,22 +39,24 @@ export default function Tabs({ tabs }: { tabs: TabItem[] }) {
 
   return (
     <ul className="relative flex w-fit gap-5 rounded-xl bg-Black/20 p-2 backdrop-blur-2xl">
-      <div
+      <li
         className="absolute top-1/2 -z-10 h-[calc(100%-16px)] -translate-y-1/2 rounded-lg bg-Primary/400 transition-[left] duration-500"
         style={{
           left: `${currentTab.indicator.left}px`,
           width: `${currentTab.indicator.width}px`,
         }}
-      ></div>
+      ></li>
       {tabs.map((tab) => {
         const props = { tab, currentTab, setCurrentTab };
-        return tab.link ? (
-          <Link href={`/explore${tab.link}`} key={tab.label}>
-            <Tab {...props} />
-          </Link>
-        ) : (
+        return (
           <li key={tab.label}>
-            <Tab {...props} />
+            {tab.link ? (
+              <Link href={`/explore${tab.link}`} key={tab.label}>
+                <Tab {...props} />
+              </Link>
+            ) : (
+              <Tab {...props} />
+            )}
           </li>
         );
       })}
