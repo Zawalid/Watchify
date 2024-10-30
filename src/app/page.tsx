@@ -1,4 +1,4 @@
-import SearchForm from "@/components/Forms/SearchForm";
+import SearchForm from "@/components/SearchForm";
 import Tabs from "@/components/Tabs";
 import { getWatchList } from "@/lib/api";
 

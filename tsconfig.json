@@ -27,6 +27,9 @@
       ],
       "@/images/*": [
         "./public/images/*"
+      ],
+      "@/auth": [
+        "./src/lib/auth.ts"
       ]
     },
     "target": "ES2017"

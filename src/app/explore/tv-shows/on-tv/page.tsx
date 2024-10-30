@@ -1,4 +1,4 @@
-import { getOnTheAirTvShows } from "@/lib/TMDB";
+import { getOnTheAirTvShows } from "@/lib/api/TMDB";
 import WithPagination from "../../_components/WithPagination";
 
 export const metadata = {

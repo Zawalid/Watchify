@@ -1,7 +1,7 @@
 "use client";
 
-import SearchForm from "@/components/Forms/SearchForm";
-import Tabs from "./Tabs";
+import SearchForm from "@/components/SearchForm";
+import Tabs from "../../../components/ui/Tabs";
 import { usePathname } from "next/navigation";
 import { useSearchParams } from "@/hooks/useSearchParams";
 

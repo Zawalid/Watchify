@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils";
 import type { JSX } from "react";
 
 export const icons: Record<IconType, JSX.Element> = {

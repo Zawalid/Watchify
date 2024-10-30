@@ -4,8 +4,8 @@ import { Suspense, type JSX } from "react";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { NoResults } from "./Status";
 import Card from "./Card";
-import { getMediaType } from "@/lib/utils";
-import Pagination from "./Pagination";
+import { getMediaType } from "@/utils";
+import Pagination from "./ui/Pagination";
 import { useSearchParams } from "@/hooks/useSearchParams";
 
 type Props = {
@@ -30,7 +30,7 @@ function List({ data, emptyComponent, query = "", page }: Props) {
   return (
     <>
       <div
-        className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] items-start gap-5"
+        className="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] items-start gap-5"
         ref={parent}
       >
         {filteredData.map((media) => (

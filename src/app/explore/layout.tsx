@@ -1,4 +1,4 @@
-import Tabs from "@/app/explore/_components/Tabs";
+import Tabs from "@/components/ui/Tabs";
 import { ExploreAction } from "./_components/ExploreAction";
 import { Suspense } from "react";
 

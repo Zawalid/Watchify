@@ -1,5 +1,5 @@
 import CardsList from "@/components/CardsList";
-import SearchForm from "@/components/Forms/SearchForm";
+import SearchForm from "@/components/SearchForm";
 import { EmptyWatchList } from "@/components/Status";
 import { getMovies } from "@/lib/api";
 

@@ -5,6 +5,10 @@
     "plugin:react/recommended",
     "plugin:react/jsx-runtime"
   ],
+  "rules": {
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "error"
+  },
   "overrides": [
     {
       "files": [
@@ -12,7 +16,14 @@
         "*.tsx"
       ],
       "rules": {
-        "no-unused-vars": "warn"
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "vars": "all",
+            "args": "after-used",
+            "ignoreRestSiblings": false
+          }
+        ]
       }
     }
   ]

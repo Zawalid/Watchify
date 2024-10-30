@@ -1,9 +1,9 @@
-import { GENRES } from "@/lib/TMDB/config";
-import { getMediaType, getRating, getReleaseYear, slugify } from "@/lib/utils";
+import { GENRES } from "@/lib/api/TMDB/config";
+import { getMediaType, getRating, getReleaseYear, slugify } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 import placeholderImage from "@/images/placeholder.png";
-import { placeholder } from "@/lib/shimmer-placeholder";
+import { placeholder } from "@/utils/shimmer-placeholder";
 import CardActions from "./CardActions";
 
 const getLink = (type: string, name: string) => {
@@ -18,10 +18,7 @@ export default function Card({ media }: { media: TvShow | Movie }) {
   return (
     <div className="flex flex-col group relative">
       <CardActions />
-      <Link
-        href={getLink(type, title)}
-        className="w-full h-auto md:h-[250px] lg:h-[300px] mb-3 rounded-2xl"
-      >
+      <Link href={getLink(type, title)} className="w-full mb-3 rounded-2xl">
         <div className="w-full h-[220px] md:h-[250px]  lg:h-[300px] relative overflow-hidden shadow-lg rounded-2xl ">
           {media.poster_path ? (
             <Image

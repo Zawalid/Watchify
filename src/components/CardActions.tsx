@@ -80,7 +80,7 @@ export default function CardActions() {
 
   return (
     <>
-      <Dropdown classNames={{ content: "blur-bg  backdrop-blur-2xl" }} backdrop="opaque">
+      <Dropdown classNames={{ content: "blur-bg  backdrop-blur-2xl" }} backdrop="opaque" radius="sm">
         <DropdownTrigger>
           <button className="absolute top-2 grid place-content-center right-2 z-10 text-white rounded-full transition-transform duration-300 size-8 bg-Grey/900 hover:scale-110  shadow-md border border-Grey/600">
             <svg
@@ -103,11 +103,9 @@ export default function CardActions() {
               "rounded-md",
               "border-none",
               "text-default-500",
-              "transition-opacity",
               "data-[hover=true]:text-foreground",
               "data-[hover=true]:bg-Primary/500",
               "data-[selectable=true]:focus:bg-Primary/500",
-              "data-[pressed=true]:opacity-70",
               "data-[focus-visible=true]:ring-Primary/700",
             ],
           }}

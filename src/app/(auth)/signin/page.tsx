@@ -1,23 +1,16 @@
+import { signInAction } from "@/lib/actions";
 import Input from "@/components/ui/Input";
 import PasswordInput from "@/components/ui/PasswordInput";
 import { SubmitButton } from "../AuthButtons";
 
 export const metadata = {
-  title: "Sign Up",
-  description: "Sign up page",
+  title: "Sign In",
+  description: "Sign In page",
 };
 
 export default function Page() {
   return (
-    <form className="flex flex-col gap-4">
-      <Input
-        type="text"
-        name="fullName"
-        icon="fullName"
-        label="Full Name"
-        placeholder="eg. Walid"
-        defaultValue={"Walid"}
-      />
+    <form className="flex flex-col gap-4" action={signInAction}>
       <Input
         type="email"
         name="email"
@@ -31,7 +24,8 @@ export default function Page() {
         placeholder="*********"
         defaultValue={"password"}
       />
-      <SubmitButton text="Sign Up" loadingText="Signing up..." />
+      <input type="text" hidden name="redirectTo" defaultValue="/" />
+      <SubmitButton text="Sign In" loadingText="Signing in..." />
     </form>
   );
 }

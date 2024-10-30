@@ -1,5 +1,7 @@
+"use client";
+
 import Form from "next/form";
-import Input, { InputProps } from "../Input";
+import Input, { InputProps } from "./ui/Input";
 import SearchButton, { ResetButton } from "./SearchFormButtons";
 
 interface Props extends InputProps {

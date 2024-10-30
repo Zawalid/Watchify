@@ -1,6 +1,6 @@
-import { placeholder } from "@/lib/shimmer-placeholder";
-import { LANGUAGES } from "@/lib/TMDB/config";
-import { getMediaType, getRating, getReleaseYear } from "@/lib/utils";
+import { placeholder } from "@/utils/shimmer-placeholder";
+import { LANGUAGES } from "@/lib/api/TMDB/config";
+import { getMediaType, getRating, getReleaseYear } from "@/utils";
 import Image from "next/image";
 
 export function Details({ media }: { media: TvShow | Movie }) {

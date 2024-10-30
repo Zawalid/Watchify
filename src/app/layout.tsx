@@ -3,6 +3,7 @@ import { Chewy } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import "../styles/globals.css";
 import { Providers } from "./providers";
+import { Toaster } from "sonner";
 
 const chewy = Chewy({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <Providers>
           <main className="container py-4">{children}</main>
         </Providers>
+        <Toaster />
       </body>
     </html>
   );
