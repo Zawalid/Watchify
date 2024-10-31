@@ -1,25 +1,20 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
+import NextAuth, { AuthError } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { NextAuthConfig } from 'next-auth';
+import Google from 'next-auth/providers/google';
+import { findOrCreateUser, getUser, getUserFullName } from './api';
 
 const authConfig: NextAuthConfig = {
   providers: [
     CredentialsProvider({
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        console.log(credentials);
-
-        if (!credentials) {
-          throw new Error("No credentials provided");
-        }
-        const user = {
-          email: credentials.email as string,
-          password: credentials.password as string,
-        };
+      async authorize(credentials) {
+        if (!credentials) throw new Error('No credentials provided');
+        const { data: user, error } = await getUser(credentials?.email as string, credentials?.password as string);
+        if (error) throw new AuthError(error.message);
         return user;
       },
     }),
@@ -30,17 +25,27 @@ const authConfig: NextAuthConfig = {
   ],
   callbacks: {
     authorized: async ({ auth }) => {
-      // Logged in users are authenticated, otherwise redirect to signIn page
       return !!auth;
     },
-    async signIn({ user, account, profile }) {
-      return true;
+    async jwt({ token, account, profile, trigger, user }) {
+      if (account?.provider === 'google') {
+        const { data, error } = await findOrCreateUser({
+          email: profile?.email as string,
+          full_name: profile?.name as string,
+          image: profile?.picture as string,
+          password: 'defaultPassword',
+        });
+        console.log(data, error);
+      }
+      return token;
     },
-    async session({ session, token, user }) {
+    async session({ session }) {
+      const fullName = await getUserFullName(session.user.email);
+      if (!session.user.name) session.user.name = fullName;
       return session;
     },
   },
-  pages: { signIn: "/signin" },
+  pages: { signIn: '/signin' },
 };
 
 export const { auth, signIn, signOut, handlers } = NextAuth(authConfig);

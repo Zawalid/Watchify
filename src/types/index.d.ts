@@ -11,16 +11,7 @@ declare type Links = {
 };
 
 // Input
-declare type IconType =
-  | "fullName"
-  | "email"
-  | "search"
-  | "password"
-  | "visible"
-  | "invisible"
-  | "title"
-  | "link" ;
-
+declare type IconType = 'full_name' | 'email' | 'search' | 'password' | 'visible' | 'invisible' | 'title' | 'link';
 
 declare type TMDBResponse = {
   page: number;
@@ -34,4 +25,12 @@ declare type WatchList = {
   all: number;
   movies: number;
   tv: number;
+};
+
+declare type User = {
+  id?: string;
+  full_name: string;
+  email: string;
+  image?: string;
+  password: string;
 };

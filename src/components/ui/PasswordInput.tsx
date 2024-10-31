@@ -8,7 +8,7 @@ export default function PasswordInput({ ...props }: InputProps) {
   return (
     <Input type={visible ? "text" : "password"} placeholder="*********" icon="password" {...props}>
       <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 icon"
+        className="absolute right-4 top-1/2 z-10 -translate-y-1/2 icon"
         type="button"
         onClick={() => setVisible((v) => !v)}
       >

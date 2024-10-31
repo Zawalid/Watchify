@@ -2,6 +2,7 @@ import { Button } from "@nextui-org/button";
 import { Checkbox } from "@nextui-org/checkbox";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/modal";
 
+
 type disclosure = {
   isOpen: boolean;
   onOpen: () => void;

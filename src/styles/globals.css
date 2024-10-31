@@ -14,14 +14,32 @@
 }
 
 
-/* Sonnner */
-.sonner-toast {
-  @apply backdrop-blur-2xl border-Grey/700 border text-Primary/50 bg-blur
+
+
+/** Classes */
+.icon {
+  @apply transition-colors duration-200 text-Grey/600 hover:text-Grey/400
 }
 
-.sonner-toast:not([data-type='loading']) {
+.blur-bg {
+  @apply bg-[url('/images/Background.svg')] bg-cover bg-no-repeat bg-Grey/900
+}
+
+
+/* Avatar */
+.ring-offset-background {
+  --tw-ring-offset-color: #121829
+}
+
+
+/** Sonnner */
+[data-sonner-toast] {
+  @apply blur-bg border-border;
+}
+
+[data-sonner-toast]:not([data-type='loading']) {
   & [data-icon] {
-    height: calc(100% + 1px);
+    height: calc(100% + 2px);
     position: absolute;
     left: 0;
     width: 45px;
@@ -40,24 +58,15 @@
   }
 }
 
-.sonner-toast[data-type='success'] [data-icon] {
+[data-sonner-toast][data-type='success'] [data-icon] {
   @apply bg-Warning/500
 }
 
-.sonner-toast[data-type='error'] [data-icon] {
+[data-sonner-toast][data-type='error'] [data-icon] {
   @apply bg-Error/700
 }
 
-.sonner-toast[data-type='loading'] [data-icon] {
+[data-sonner-toast][data-type='loading'] [data-icon] {
   width: 20px;
   margin-right: 15px;
-}
-
-/* Classes */
-.icon {
-  @apply transition-colors duration-200 text-Grey/600 hover:text-Grey/400
-}
-
-.blur-bg {
-  @apply bg-[url('/images/Background.svg')] bg-cover bg-no-repeat bg-Grey/900
 }

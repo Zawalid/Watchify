@@ -1,9 +1,9 @@
-import { signOutAction } from "@/lib/actions";
-import { auth } from "@/lib/auth";
-import Image from "next/image";
-import Link from "next/link";
-import UserDropdown from "./UserDropdown";
-import { Session } from "next-auth";
+import { signOutAction } from '@/lib/actions/auth';
+import { auth } from '@/lib/auth';
+import Image from 'next/image';
+import Link from 'next/link';
+import UserDropdown from './UserDropdown';
+import { Session } from 'next-auth';
 
 type NavItemProps = {
   label: string;
@@ -13,34 +13,34 @@ type NavItemProps = {
 
 const links: Links = {
   authenticated: [
-    { label: "Home", href: "/" },
-    { label: "Explore", href: "/explore" },
-    { label: "Suggestions", href: "/suggestions" },
-    { label: "Movies", href: "/movies" },
-    { label: "Tv Shows", href: "/tv-shows" },
+    { label: 'Home', href: '/' },
+    { label: 'Explore', href: '/explore' },
+    { label: 'Suggestions', href: '/suggestions' },
+    { label: 'Movies', href: '/movies' },
+    { label: 'Tv Shows', href: '/tv-shows' },
   ],
   unauthenticated: [
-    { label: "Explore", href: "/explore" },
+    { label: 'Explore', href: '/explore' },
     {
-      label: "Suggest me",
-      href: "/suggest",
+      label: 'Suggest me',
+      href: '/suggest',
     },
     {
-      label: "Sign In",
-      href: "/signin",
+      label: 'Sign In',
+      href: '/signin',
       icon: (
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 24 24'
           strokeWidth={1.5}
-          stroke="currentColor"
-          className="size-6 rotate-180"
+          stroke='currentColor'
+          className='size-6 rotate-180'
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75"
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            d='M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75'
           />
         </svg>
       ),
@@ -50,10 +50,10 @@ const links: Links = {
 
 function NavItem({ label, href, icon }: NavItemProps) {
   return (
-    <li className="group">
+    <li className='group'>
       <Link
         href={href}
-        className="text-Grey/300 hover:text-Grey/100 group-has-[.active]:text-Primary/400 flex items-center gap-2 font-medium transition-colors duration-300 group-has-[.active]:font-semibold"
+        className='flex items-center gap-2 font-medium text-Grey/300 transition-colors duration-300 hover:text-Grey/100 group-has-[.active]:font-semibold group-has-[.active]:text-Primary/400'
       >
         {label}
         {icon}
@@ -66,20 +66,17 @@ export default async function Navbar() {
   const session = await auth();
   const isAuthenticated: boolean = Boolean(await auth());
 
-  console.log(session);
 
   return (
-    <nav className="bg-blur sticky top-0 z-30 mb-12 py-3 backdrop-blur-lg">
-      <div className="container flex items-center justify-between">
-        <Link href="/">
-          <Image src="/images/logo.svg" alt="watchfolio" width={40} height={20} />
+    <nav className='sticky top-0 z-30 mb-12 bg-blur py-3 backdrop-blur-lg'>
+      <div className='container flex items-center justify-between'>
+        <Link href='/'>
+          <Image src='/images/logo.svg' alt='watchfolio' width={40} height={20} />
         </Link>
-        <ul className="flex gap-8 items-center">
-          {links[isAuthenticated ? "authenticated" : "unauthenticated"].map(
-            ({ label, href, icon }) => (
-              <NavItem key={href} label={label} href={href} icon={icon} />
-            )
-          )}
+        <ul className='flex items-center gap-8'>
+          {links[isAuthenticated ? 'authenticated' : 'unauthenticated'].map(({ label, href, icon }) => (
+            <NavItem key={href} label={label} href={href} icon={icon} />
+          ))}
         </ul>
         <UserDropdown session={session as Session} />
       </div>
