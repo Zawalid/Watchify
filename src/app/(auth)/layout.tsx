@@ -1,16 +1,15 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import signInImage from '@/images/signin.svg';
 import AuthPrompt from './AuthPrompt';
-import { signInWithGoogle } from '@/lib/actions/auth';
-import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { Button } from '@nextui-org/button';
+import { signInWithGoogleAction } from './actions';
+import { getCurrentUser } from '@/lib/api';
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  const session = await auth();
+  const { user } = await getCurrentUser();
 
-  if (session) redirect('/');
+  if (user) redirect('/');
 
   return (
     <div className='grid h-full items-center gap-5 md:grid-cols-2'>
@@ -21,7 +20,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
         <AuthPrompt />
         {children}
         <p className='text-center text-sm text-Grey/300'>or</p>
-        <form className='h-12' action={signInWithGoogle}>
+        <form className='h-12' action={signInWithGoogleAction}>
           <Button
             className='w-full bg-White/100 text-black hover:bg-White/75'
             startContent={

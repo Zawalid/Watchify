@@ -5,15 +5,15 @@ import { toast } from 'sonner';
 import { Button } from '@nextui-org/button';
 import Input from '@/components/ui/Input';
 import PasswordInput from '@/components/ui/PasswordInput';
-import { signInAction, signUpAction } from '@/lib/actions/auth';
+import { signInAction, signUpAction } from './actions';
 
 export default function Form({ type }: { type: 'signin' | 'signup' }) {
   const [errors, formAction, isPending] = useActionState(type === 'signin' ? signInAction : signUpAction, null);
-
+  // const errors = {}
+  // const isPending = false;
 
   useEffect(() => {
-    // Because Auth.js always appends 'Read more...' to the error message . The '|' is used by me to delimit the error message
-    if (errors?.message) toast.error(errors.message.split('|')[0]);
+    if (errors?.message) toast.error(errors.message);
   }, [errors]);
 
   return (

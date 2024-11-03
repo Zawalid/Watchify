@@ -1,12 +1,12 @@
 'use client';
 
-import { signOutAction } from '@/lib/actions/auth';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@nextui-org/dropdown';
 import { Avatar } from '@nextui-org/avatar';
-import { Session } from 'next-auth';
+import type { User } from '@supabase/supabase-js';
+import { signOutAction } from '@/app/(auth)/actions';
 
-export default function UserDropdown({ session }: { session: Session }) {
-  if (!session) return null;
+export default function UserDropdown({ user }: { user: User }) {
+  if (!user) return null;
 
   return (
     <Dropdown
@@ -17,7 +17,7 @@ export default function UserDropdown({ session }: { session: Session }) {
     >
       <DropdownTrigger>
         <Avatar
-          src={session?.user?.image as string}
+          src={user.user_metadata.avatar_url ?? user.user_metadata.picture}
           isBordered
           classNames={{ base: 'bg-gradient-to-br from-[#7b6ef6] to-[#1ea5fc]', icon: 'text-Primary/100' }}
           color='secondary'
@@ -29,14 +29,13 @@ export default function UserDropdown({ session }: { session: Session }) {
       <DropdownMenu
         aria-label='Profile Actions'
         variant='faded'
-        itemClasses={{
-          base: ['rounded-md', 'border-none', 'text-default-500', 'data-[hover=true]:text-foreground'],
-        }}
+        itemClasses={{ base: ['rounded-md', 'border-none', 'text-default-500', 'data-[hover=true]:text-foreground data-[disabled=true]:opacity-100'] }}
+        disabledKeys={['profile']}
       >
         <DropdownSection showDivider>
-          <DropdownItem className='cursor-auto data-[hover=true]:bg-transparent'>
-            <h5 className='text-base font-bold text-Primary/50'>{session.user?.name}</h5>
-            <h6 className='font-medium text-Primary/200'>{session.user?.email}</h6>
+          <DropdownItem key='profile' className='cursor-auto data-[hover=true]:bg-transparent'>
+            <h5 className='text-base font-bold text-Primary/100'>{user.user_metadata.full_name}</h5>
+            <h6 className='font-medium text-Primary/200'>{user.email}</h6>
           </DropdownItem>
         </DropdownSection>
         <DropdownItem

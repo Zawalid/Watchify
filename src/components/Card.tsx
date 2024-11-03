@@ -25,6 +25,7 @@ export default function Card({ media }: { media: TvShow | Movie }) {
               src={`http://image.tmdb.org/t/p/w500${poster_path}`}
               alt={title}
               fill
+              sizes="100%"
               className="object-center object-cover transition-transform duration-300 group-hover:scale-110"
               placeholder={placeholder}
             />

@@ -215,17 +215,16 @@ export default function Input({ children, type, icon, label, ...props }: InputPr
   const { parentclassname, placeholder, error } = props;
 
   return (
-    <div className='flex flex-col gap-2'>
-      <div className={cn('relative rounded-xl', parentclassname)}>
+    <div className={cn('flex flex-col gap-2', parentclassname)}>
+      <div className='relative rounded-xl'>
         <span className='absolute left-4 top-1/2 -translate-y-1/2 text-Grey/600'>
           {icons[type as IconType] || (icon && icons[icon])}
         </span>
         <input
           type={type || 'text'}
-         
           className={cn(
             'peer relative z-10 w-full rounded-xl border-2 border-Grey/800 bg-Black/10 pb-3 pl-14 pr-4 pt-7 text-sm text-Grey/100 outline-none placeholder:text-sm placeholder:text-transparent focus:border-Primary/500 focus:placeholder:text-Grey/600',
-            error ? 'border-Error/500 focus:border-Error/500' : 'border-Grey/800 focus:border-Primary/500',
+            error ? 'border-Error/500 focus:border-Error/500' : 'border-Grey/800 focus:border-Primary/500'
           )}
           placeholder={placeholder}
           {...props}

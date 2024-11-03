@@ -1,9 +1,9 @@
-import { signOutAction } from '@/lib/actions/auth';
-import { auth } from '@/lib/auth';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { User } from '@supabase/supabase-js';
+import { createClient } from '@/lib/supabase/server';
 import UserDropdown from './UserDropdown';
-import { Session } from 'next-auth';
+import { getCurrentUser } from '@/lib/api';
 
 type NavItemProps = {
   label: string;
@@ -63,9 +63,10 @@ function NavItem({ label, href, icon }: NavItemProps) {
 }
 
 export default async function Navbar() {
-  const session = await auth();
-  const isAuthenticated: boolean = Boolean(await auth());
-
+  // const supabase = await createClient();
+  // const { data } = await supabase.auth.getUser();
+  const {user} = await getCurrentUser()
+  const isAuthenticated: boolean = Boolean(user);
 
   return (
     <nav className='sticky top-0 z-30 mb-12 bg-blur py-3 backdrop-blur-lg'>
@@ -78,7 +79,7 @@ export default async function Navbar() {
             <NavItem key={href} label={label} href={href} icon={icon} />
           ))}
         </ul>
-        <UserDropdown session={session as Session} />
+        <UserDropdown user={user as User} />
       </div>
     </nav>
   );
