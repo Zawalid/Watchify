@@ -1,4 +1,4 @@
-import { getNowPlayingMovies } from "@/lib/api/TMDB";
+import { getNowPlayingMovies } from "@/lib/TMDB";
 import withCustomPage from "../../_components/WithPagination";
 
 export const metadata = {

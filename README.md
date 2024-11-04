@@ -11,7 +11,8 @@
 - [ ] Pages transition animation
 - [ ] Custom metadata of each page
 - [ ] Explore dropdown
-- [ ] Remove tabs repition
+- [ ] Remove tabs repetition
+- [ ] Handle Google Auth errors (create a dedicated page)
 
 
 

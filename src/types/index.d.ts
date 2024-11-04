@@ -11,7 +11,7 @@ declare type Links = {
 };
 
 // Input
-declare type IconType = 'full_name' | 'email' | 'search' | 'password' | 'visible' | 'invisible' | 'title' | 'link';
+declare type IconType = 'name' | 'email' | 'search' | 'password' | 'visible' | 'invisible' | 'title' | 'link';
 
 declare type TMDBResponse = {
   page: number;
@@ -27,10 +27,21 @@ declare type WatchList = {
   tv: number;
 };
 
-declare type User = {
-  id?: string;
-  full_name: string;
-  email: string;
-  image?: string;
-  password: string;
+declare type FormError = {
+  email?: string[];
+  password?: string[];
+  name?: string[];
+  message?: string;
+  confirm_password?: string[];
 };
+
+// declare interface User extends import('node-appwrite').Models.User<Models.Preferences> {
+//   $id?: string;
+//   account_id: string;
+//   name: string;
+//   email: string;
+//   avatar: string;
+//   password: string;
+//   initialsAvatar: string;
+//   locale: import('node-appwrite').Models.Locale;
+// }

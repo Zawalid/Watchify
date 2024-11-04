@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const credentials = {
+export const credentials = {
   email: z
     .string()
     .min(1, { message: 'Please enter your email address' })
@@ -15,9 +15,19 @@ const credentials = {
 export const signInSchema = z.object(credentials);
 
 export const signUpSchema = z.object({
-  full_name: z
+  name: z
     .string()
     .min(1, { message: 'Please enter your full name' })
     .min(3, { message: 'Full name must be at least 3 characters long' }),
   ...credentials,
 });
+
+export const resetPasswordSchema = z
+  .object({
+    password: credentials.password,
+    confirm_password: credentials.password,
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: 'Passwords do not match. Please check the password and confirm password.',
+    path: ['confirm_password'],
+  });

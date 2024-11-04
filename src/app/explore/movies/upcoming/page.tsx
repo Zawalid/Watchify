@@ -1,4 +1,4 @@
-import { getUpcomingMovies } from "@/lib/api/TMDB";
+import { getUpcomingMovies } from "@/lib/TMDB";
 import WithPagination from "../../_components/WithPagination";
 
 export const metadata = {

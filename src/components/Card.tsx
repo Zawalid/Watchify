@@ -1,4 +1,4 @@
-import { GENRES } from "@/lib/api/TMDB/config";
+import { GENRES } from "@/lib/TMDB/config";
 import { getMediaType, getRating, getReleaseYear, slugify } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";

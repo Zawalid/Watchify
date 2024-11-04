@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { User } from '@supabase/supabase-js';
-import { createClient } from '@/lib/supabase/server';
 import UserDropdown from './UserDropdown';
-import { getCurrentUser } from '@/lib/api';
+import { getUser } from '@/lib/appwrite';
 
 type NavItemProps = {
   label: string;
@@ -63,9 +61,7 @@ function NavItem({ label, href, icon }: NavItemProps) {
 }
 
 export default async function Navbar() {
-  // const supabase = await createClient();
-  // const { data } = await supabase.auth.getUser();
-  const {user} = await getCurrentUser()
+  const user = await getUser();
   const isAuthenticated: boolean = Boolean(user);
 
   return (
@@ -79,7 +75,7 @@ export default async function Navbar() {
             <NavItem key={href} label={label} href={href} icon={icon} />
           ))}
         </ul>
-        <UserDropdown user={user as User} />
+        <UserDropdown user={user} />
       </div>
     </nav>
   );

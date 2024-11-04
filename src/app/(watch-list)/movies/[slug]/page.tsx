@@ -1,4 +1,4 @@
-import { getDetails } from "@/lib/api/TMDB";
+import { getDetails } from "@/lib/TMDB";
 import { notFound } from "next/navigation";
 import { Details } from "../../Details";
 
