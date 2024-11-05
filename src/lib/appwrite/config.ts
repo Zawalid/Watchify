@@ -17,7 +17,7 @@ export async function createSessionClient() {
 
   return {
     account: new Account(client),
-    databases: new Databases(client),
+    database: new Databases(client),
     avatars: new Avatars(client),
     locale: localeInfo,
   };
@@ -32,7 +32,7 @@ export async function createAdminClient() {
   return {
     account: new Account(client),
     users: new Users(client),
-    databases: new Databases(client),
+    database: new Databases(client),
   };
 }
 

@@ -4,6 +4,7 @@
         "parentclassname",
         "signin",
         "signup",
-        "watchlist"
+        "watchlist",
+        "WATCHLISTS"
     ]
 }

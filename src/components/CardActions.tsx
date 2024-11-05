@@ -25,7 +25,7 @@ const icons = {
       />
     </svg>
   ),
-  watch_list: (
+  watchlist: (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -113,7 +113,7 @@ export default function CardActions() {
             if (key === "add_to_list") disclosure.onOpen();
           }}
         >
-          <DropdownItem key="watch_list" startContent={icons.watch_list} endContent={icons.added}>
+          <DropdownItem key="watchlist" startContent={icons.watchlist} endContent={icons.added}>
             WatchList
           </DropdownItem>
           <DropdownItem key="add_to_list" startContent={icons.add_to_list}>

@@ -11,13 +11,6 @@
   },
   "rules": {
     "react/jsx-props-no-spreading": "off",
-    "quotes": [
-      "error",
-      "double",
-      {
-        "allowTemplateLiterals": true
-      }
-    ],
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "no-unused-vars": "warn",

@@ -1,24 +1,24 @@
-import SearchForm from "@/components/SearchForm";
-import Tabs from "@/components/Tabs";
-import { getWatchList } from "@/lib/api";
+import SearchForm from '@/components/SearchForm';
+import Tabs from '@/components/Tabs';
+import { getWatchlist } from '@/lib/appwrite';
 
 export const metadata = {
-  title: "Watch List",
-  description: "List of movies and TV Shows, I, Walid Zakan have watched till date.",
+  title: 'Watch List',
+  description: 'List of movies and TV Shows, I, Walid Zakan have watched till date.',
 };
 
 export default async function Page() {
-  const data = await getWatchList();
+  const watchlist = await getWatchlist();
+
+  console.dir(watchlist, { depth: 5 });
 
   return (
-    <div className="flex h-full flex-col gap-12">
-      <div className="flex w-1/2 flex-col gap-4">
-        <h1 className="text-4xl font-semibold text-Grey/50">Your Watch List</h1>
-        <SearchForm label="Search Your Movies And TV Shows" placeholder="eg. Breaking Bad" />
+    <div className='flex h-full flex-col gap-12'>
+      <div className='flex w-1/2 flex-col gap-4'>
+        <h1 className='text-4xl font-semibold text-Grey/50'>Your Watch List</h1>
+        <SearchForm label='Search Your Movies And TV Shows' placeholder='eg. Breaking Bad' />
       </div>
-      <div className="flex flex-col gap-6">
-        <Tabs data={data} />
-      </div>
+      <div className='flex flex-col gap-6'>{/* <Tabs data={data} /> */}</div>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger 
 import { Avatar } from '@nextui-org/avatar';
 import { signOutAction } from '@/app/(authentication)/(auth)/actions';
 
-export default function UserDropdown({ user }: { user: User | null }) {
+export default function UserDropdown({ user }: { user: Profile | null }) {
   if (!user) return null;
 
   const avatar = user.avatar ?? `data:image/png;base64,${user.initialsAvatar}`;

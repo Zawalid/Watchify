@@ -1,50 +1,45 @@
-import { DATABASE_ID, USERS_COLLECTION_ID, WATCH_LIST_COLLECTION_ID } from '@/utils/constants';
+import { DATABASE_ID, PROFILES_COLLECTION_ID, WATCHLIST_COLLECTION_ID } from '@/utils/constants';
 import { createAdminClient, createSessionClient, setPermissions } from './config';
 import bufferToBase64 from '@/utils/bufferToBase64';
-import { ID } from 'node-appwrite';
 
-export const getUser = async (): Promise<User | null> => {
+export const getUser = async (): Promise<Profile | null> => {
   try {
-    const { account, locale, avatars } = await createSessionClient();
+    const { account, database, locale, avatars } = await createSessionClient();
     if (!account) return null;
+
     const user = await account.get();
-
     const initialsAvatar = await avatars.getInitials(user.name);
+    const profile = (await database.listDocuments(DATABASE_ID, PROFILES_COLLECTION_ID)).documents[0];
+    const { $id, name, email, avatar, watchlist, $createdAt, $updatedAt } = profile;
 
-    // const user = await databases.listDocuments(DATABASE_ID, USERS_COLLECTION_ID, [Query.equal('account_id', acc.$id)]);
-    return {
-      ...user,
+    const updatedProfile: Profile = {
+      $id,
+      account_id: user.$id,
+      name,
+      email,
+      avatar,
       initialsAvatar: bufferToBase64(initialsAvatar),
       locale,
-      avatar: null,
-      account_id: '67djsdsd',
+      watchlist,
+      $createdAt,
+      $updatedAt,
     };
+
+    return updatedProfile;
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const saveUserInDb = async (account_id: string, avatar: string | null, watchlist: string | null) => {
-  const { databases } = await createAdminClient();
-  const user = await databases.createDocument(
-    DATABASE_ID,
-    USERS_COLLECTION_ID,
-    ID.unique(),
-    { account_id, avatar, watchlist },
-    setPermissions(account_id)
-  );
-  return user;
-};
-
-export const createWatchList = async (user_id: string) => {
-  const { databases } = await createAdminClient();
-  const watchList = await databases.createDocument(
-    DATABASE_ID,
-    WATCH_LIST_COLLECTION_ID,
-    ID.unique(),
-    { user_id, items: [], visibility: 'private' },
-    setPermissions(user_id)
-  );
-  return watchList;
+export const getWatchlist = async () => {
+  const { database } = await createSessionClient();
+  if (!database) return null;
+  try {
+    const watchList = (await database.listDocuments(DATABASE_ID, WATCHLIST_COLLECTION_ID)).documents[0];
+    return watchList;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };

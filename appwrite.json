@@ -1,0 +1,310 @@
+{
+    "projectId": "6727969400067a48d35e",
+    "projectName": "Watchfolio",
+    "settings": {
+        "services": {
+            "account": true,
+            "avatars": true,
+            "databases": true,
+            "locale": true,
+            "health": true,
+            "storage": true,
+            "teams": true,
+            "users": true,
+            "functions": true,
+            "graphql": true,
+            "messaging": true
+        },
+        "auth": {
+            "methods": {
+                "jwt": true,
+                "phone": true,
+                "invites": true,
+                "anonymous": true,
+                "email-otp": true,
+                "magic-url": true,
+                "email-password": true
+            },
+            "security": {
+                "duration": 31536000,
+                "limit": 0,
+                "sessionsLimit": 10,
+                "passwordHistory": 0,
+                "passwordDictionary": false,
+                "personalDataCheck": false,
+                "sessionAlerts": false,
+                "mockNumbers": []
+            }
+        }
+    },
+    "databases": [
+        {
+            "$id": "6727f7f10026c41951ee",
+            "name": "App",
+            "enabled": true
+        }
+    ],
+    "collections": [
+        {
+            "$id": "6727f8040026ddec4f70",
+            "$permissions": [],
+            "databaseId": "6727f7f10026c41951ee",
+            "name": "profiles",
+            "enabled": true,
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "key": "account_id",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 30,
+                    "default": null
+                },
+                {
+                    "key": "avatar",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "watchlist",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "672958cf00155f79db8c",
+                    "relationType": "oneToOne",
+                    "twoWay": true,
+                    "twoWayKey": "owner",
+                    "onDelete": "setNull",
+                    "side": "child"
+                },
+                {
+                    "key": "name",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "email",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "format": "email",
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "672958cf00155f79db8c",
+            "$permissions": [],
+            "databaseId": "6727f7f10026c41951ee",
+            "name": "watchlists",
+            "enabled": true,
+            "documentSecurity": true,
+            "attributes": [
+                {
+                    "key": "visibility",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "elements": [
+                        "private",
+                        "public"
+                    ],
+                    "format": "enum",
+                    "default": "private"
+                },
+                {
+                    "key": "items",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "672959df0010a3fb478a",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "watchlist_id",
+                    "onDelete": "cascade",
+                    "side": "child"
+                },
+                {
+                    "key": "owner",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "6727f8040026ddec4f70",
+                    "relationType": "oneToOne",
+                    "twoWay": true,
+                    "twoWayKey": "watchlist",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "672959df0010a3fb478a",
+            "$permissions": [],
+            "databaseId": "6727f7f10026c41951ee",
+            "name": "watchlist_items",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "watchlist_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "672958cf00155f79db8c",
+                    "relationType": "manyToOne",
+                    "twoWay": true,
+                    "twoWayKey": "items",
+                    "onDelete": "cascade",
+                    "side": "parent"
+                },
+                {
+                    "key": "media_id",
+                    "type": "relationship",
+                    "required": false,
+                    "array": false,
+                    "relatedCollection": "672959ee0039db21aaac",
+                    "relationType": "manyToOne",
+                    "twoWay": false,
+                    "twoWayKey": "media",
+                    "onDelete": "setNull",
+                    "side": "parent"
+                },
+                {
+                    "key": "added_at",
+                    "type": "datetime",
+                    "required": true,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "672959ee0039db21aaac",
+            "$permissions": [],
+            "databaseId": "6727f7f10026c41951ee",
+            "name": "media",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "tmdb_id",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 30,
+                    "default": null
+                },
+                {
+                    "key": "title",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "media_type",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "elements": [
+                        "movie",
+                        "tv"
+                    ],
+                    "format": "enum",
+                    "default": null
+                },
+                {
+                    "key": "vote_average",
+                    "type": "double",
+                    "required": false,
+                    "array": false,
+                    "min": 0,
+                    "max": 10,
+                    "default": 0
+                },
+                {
+                    "key": "poster_path",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "format": "url",
+                    "default": null
+                },
+                {
+                    "key": "genre_ids",
+                    "type": "integer",
+                    "required": false,
+                    "array": true,
+                    "min": 0,
+                    "max": 30,
+                    "default": null
+                },
+                {
+                    "key": "release_date",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "67295b9700077282c755",
+            "$permissions": [],
+            "databaseId": "6727f7f10026c41951ee",
+            "name": "lists",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [],
+            "indexes": []
+        }
+    ],
+    "functions": [
+        {
+            "$id": "672a314c00010495f74c",
+            "name": "Initialize Profile",
+            "runtime": "node-22",
+            "execute": [
+                "any"
+            ],
+            "events": [
+                "users.*.sessions.*.create"
+            ],
+            "scopes": [
+                "users.read",
+                "databases.read",
+                "databases.write",
+                "collections.read",
+                "collections.write",
+                "attributes.read",
+                "attributes.write",
+                "indexes.read",
+                "indexes.write",
+                "documents.read",
+                "documents.write"
+            ],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "path": "functions/Initialize Profile"
+        }
+    ]
+}
