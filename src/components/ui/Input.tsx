@@ -1,8 +1,9 @@
 import { cn } from '@/utils';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import type { JSX } from 'react';
 
 export const icons: Record<IconType, JSX.Element> = {
-  full_name: (
+  name: (
     <svg
       stroke='currentColor'
       fill='none'
@@ -213,9 +214,10 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 
 export default function Input({ children, type, icon, label, ...props }: InputProps) {
   const { parentclassname, placeholder, error } = props;
+  const [parent] = useAutoAnimate();
 
   return (
-    <div className={cn('flex flex-col gap-2', parentclassname)}>
+    <div className={cn('flex flex-col gap-2', parentclassname)} ref={parent}>
       <div className='relative rounded-xl'>
         <span className='absolute left-4 top-1/2 -translate-y-1/2 text-Grey/600'>
           {icons[type as IconType] || (icon && icons[icon])}

@@ -1,4 +1,4 @@
-import { getPopularMovies } from "@/lib/api/TMDB";
+import { getPopularMovies } from "@/lib/TMDB";
 import WithPagination from "../../_components/WithPagination";
 
 export const metadata = {

@@ -1,4 +1,4 @@
-import Form from "../Form";
+import Form from "../_components/Form";
 
 export const metadata = {
   title: 'Sign In',

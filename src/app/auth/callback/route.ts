@@ -1,30 +1,26 @@
-import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { createAdminClient } from '@/lib/appwrite/config';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
-  const code = searchParams.get('code');
-  // if "next" is in param, use it as the redirect URL
-  const next = searchParams.get('next') ?? '/';
+export async function GET(request: NextRequest) {
+  const userId = request.nextUrl.searchParams.get('userId');
+  const secret = request.nextUrl.searchParams.get('secret');
 
-  if (code) {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) {
-      const forwardedHost = request.headers.get('x-forwarded-host'); // original origin before load balancer
-      const isLocalEnv = process.env.NODE_ENV === 'development';
-      if (isLocalEnv) {
-        // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
-        console.log(origin, next);
-        return NextResponse.redirect(`${origin}${next}`);
-      } else if (forwardedHost) {
-        return NextResponse.redirect(`https://${forwardedHost}${next}`);
-      } else {
-        return NextResponse.redirect(`${origin}${next}`);
-      }
-    }
+  const { account } = await createAdminClient();
+
+  if (!userId || !secret) {
+    return NextResponse.redirect(`${request.nextUrl.origin}/error`);
   }
 
-  // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  const session = await account.createSession(userId, secret);
+
+  const response = NextResponse.redirect(`${request.nextUrl.origin}/`);
+
+  response.cookies.set('session', session.secret, {
+    path: '/',
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: true,
+  });
+
+  return response;
 }

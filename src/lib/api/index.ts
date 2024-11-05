@@ -1,18 +1,10 @@
 'server only';
 
-import { getPopularTvShows } from './TMDB';
-import { createClient } from '../supabase/server';
+import { getPopularTvShows } from '../TMDB';
 
 //* Users
 
-export const getCurrentUser = async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  return { user, error };
-};
+
 
 // export const createUser = async (user: User) => {
 //   const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -41,8 +33,8 @@ export const getCurrentUser = async () => {
 // };
 
 // export const getUserFullName = async (email: string) => {
-//   const { data } = await supabase.from('users').select('full_name').eq('email', email).single();
-//   return data?.full_name;
+//   const { data } = await supabase.from('users').select('name').eq('email', email).single();
+//   return data?.name;
 // };
 
 export const getWatchList = async () => {

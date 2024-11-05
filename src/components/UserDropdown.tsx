@@ -2,11 +2,12 @@
 
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@nextui-org/dropdown';
 import { Avatar } from '@nextui-org/avatar';
-import type { User } from '@supabase/supabase-js';
-import { signOutAction } from '@/app/(auth)/actions';
+import { signOutAction } from '@/app/(authentication)/(auth)/actions';
 
-export default function UserDropdown({ user }: { user: User }) {
+export default function UserDropdown({ user }: { user: User | null }) {
   if (!user) return null;
+
+  const avatar = user.avatar ?? `data:image/png;base64,${user.initialsAvatar}`;
 
   return (
     <Dropdown
@@ -17,9 +18,12 @@ export default function UserDropdown({ user }: { user: User }) {
     >
       <DropdownTrigger>
         <Avatar
-          src={user.user_metadata.avatar_url ?? user.user_metadata.picture}
+          src={avatar}
           isBordered
-          classNames={{ base: 'bg-gradient-to-br from-[#7b6ef6] to-[#1ea5fc]', icon: 'text-Primary/100' }}
+          classNames={{
+            base: avatar ? 'bg-white' : 'bg-gradient-to-br  from-[#7b6ef6] to-[#1ea5fc]',
+            icon: 'text-Primary/100',
+          }}
           color='secondary'
           size='sm'
           showFallback
@@ -29,12 +33,19 @@ export default function UserDropdown({ user }: { user: User }) {
       <DropdownMenu
         aria-label='Profile Actions'
         variant='faded'
-        itemClasses={{ base: ['rounded-md', 'border-none', 'text-default-500', 'data-[hover=true]:text-foreground data-[disabled=true]:opacity-100'] }}
+        itemClasses={{
+          base: [
+            'rounded-md',
+            'border-none',
+            'text-default-500',
+            'data-[hover=true]:text-foreground data-[disabled=true]:opacity-100',
+          ],
+        }}
         disabledKeys={['profile']}
       >
         <DropdownSection showDivider>
           <DropdownItem key='profile' className='cursor-auto data-[hover=true]:bg-transparent'>
-            <h5 className='text-base font-bold text-Primary/100'>{user.user_metadata.full_name}</h5>
+            <h5 className='text-base font-bold text-Primary/100'>{user.name}</h5>
             <h6 className='font-medium text-Primary/200'>{user.email}</h6>
           </DropdownItem>
         </DropdownSection>

@@ -1,4 +1,4 @@
-import { getAiringTodayTvShows } from "@/lib/api/TMDB";
+import { getAiringTodayTvShows } from "@/lib/TMDB";
 import WithPagination from "../../_components/WithPagination";
 
 export const metadata = {

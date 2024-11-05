@@ -1,32 +1,26 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
-import { toast } from 'sonner';
-import { Button } from '@nextui-org/button';
 import Input from '@/components/ui/Input';
 import PasswordInput from '@/components/ui/PasswordInput';
-import { signInAction, signUpAction } from './actions';
+import { signInAction, signUpAction } from '../actions';
+import Link from 'next/link';
+import { useAction } from '@/hooks/useAction';
+import { Button } from '@nextui-org/button';
 
 export default function Form({ type }: { type: 'signin' | 'signup' }) {
-  const [errors, formAction, isPending] = useActionState(type === 'signin' ? signInAction : signUpAction, null);
-  // const errors = {}
-  // const isPending = false;
-
-  useEffect(() => {
-    if (errors?.message) toast.error(errors.message);
-  }, [errors]);
+  const { errors, formAction, isPending } = useAction(type === 'signin' ? signInAction : signUpAction);
 
   return (
     <form className='flex flex-col gap-4' action={formAction}>
       {type === 'signup' && (
         <Input
           type='text'
-          name='full_name'
-          icon='full_name'
+          name='name'
+          icon='name'
           label='Full Name'
-          placeholder='eg. Walid'
-          defaultValue={'Walid'}
-          error={errors?.full_name?.[0]}
+          placeholder='eg. John Doe'
+          defaultValue={'Walid Zakan'}
+          error={errors?.name?.[0]}
         />
       )}
       <Input
@@ -44,7 +38,15 @@ export default function Form({ type }: { type: 'signin' | 'signup' }) {
         defaultValue={'password'}
         error={errors?.password?.[0]}
       />
-      <Button className='mt-5 w-full' color='primary' type='submit' isLoading={isPending}>
+      {type === 'signin' && (
+        <Link
+          href='/forgot-password'
+          className='text-end text-sm text-Primary/400 transition-colors duration-200 hover:text-Primary/500'
+        >
+          Forgot your password?
+        </Link>
+      )}
+      <Button className='w-full' color='primary' type='submit' isLoading={isPending}>
         {type === 'signin' ? (isPending ? 'Signing in...' : 'Sign In') : null}
         {type === 'signup' ? (isPending ? 'Signing up...' : 'Sign Up') : null}
       </Button>

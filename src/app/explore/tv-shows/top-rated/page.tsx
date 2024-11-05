@@ -1,4 +1,4 @@
-import { getTopRatedTvShows } from "@/lib/api/TMDB";
+import { getTopRatedTvShows } from "@/lib/TMDB";
 import WithPagination from "../../_components/WithPagination";
 
 export const metadata = {

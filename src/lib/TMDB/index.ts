@@ -1,4 +1,4 @@
-import { getQueryString } from "../../../utils";
+import { getQueryString } from "../../utils";
 
 const options = {
   url: "https://api.themoviedb.org/3",
