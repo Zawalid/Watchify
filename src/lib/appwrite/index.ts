@@ -1,8 +1,9 @@
-import { Query, Locale } from 'node-appwrite';
-import { createSessionClient, DATABASE_ID, USERS_COLLECTION_ID } from './config';
+import { DATABASE_ID, USERS_COLLECTION_ID, WATCH_LIST_COLLECTION_ID } from '@/utils/constants';
+import { createAdminClient, createSessionClient, setPermissions } from './config';
 import bufferToBase64 from '@/utils/bufferToBase64';
+import { ID } from 'node-appwrite';
 
-export async function getUser(): Promise<User | null> {
+export const getUser = async (): Promise<User | null> => {
   try {
     const { account, locale, avatars } = await createSessionClient();
     if (!account) return null;
@@ -22,4 +23,28 @@ export async function getUser(): Promise<User | null> {
     console.error(error);
     return null;
   }
-}
+};
+
+export const saveUserInDb = async (account_id: string, avatar: string | null, watchlist: string | null) => {
+  const { databases } = await createAdminClient();
+  const user = await databases.createDocument(
+    DATABASE_ID,
+    USERS_COLLECTION_ID,
+    ID.unique(),
+    { account_id, avatar, watchlist },
+    setPermissions(account_id)
+  );
+  return user;
+};
+
+export const createWatchList = async (user_id: string) => {
+  const { databases } = await createAdminClient();
+  const watchList = await databases.createDocument(
+    DATABASE_ID,
+    WATCH_LIST_COLLECTION_ID,
+    ID.unique(),
+    { user_id, items: [], visibility: 'private' },
+    setPermissions(user_id)
+  );
+  return watchList;
+};

@@ -6,7 +6,9 @@ import { cookies, headers } from 'next/headers';
 import { createAdminClient, createSessionClient, getErrorMessage } from '@/lib/appwrite/config';
 import { signInSchema, signUpSchema } from '@/lib/validation';
 import { COOKIE_OPTIONS } from '@/utils/constants';
+import { saveUserInDb, createWatchList } from '@/lib/appwrite';
 
+// Validate form data
 const validate = async (formData: FormData, type: 'signin' | 'signup') => {
   const data = Object.fromEntries(formData);
 
@@ -17,6 +19,7 @@ const validate = async (formData: FormData, type: 'signin' | 'signup') => {
   return { data: validated.data, error: null };
 };
 
+// Create a session
 const createSession = async (email: string, password: string) => {
   const { account } = await createAdminClient();
   let session;
@@ -32,6 +35,7 @@ const createSession = async (email: string, password: string) => {
   redirect('/');
 };
 
+// Sign in action
 export const signInAction = async (_: any, formData: FormData): Promise<FormError | undefined> => {
   const { data, error } = await validate(formData, 'signin');
   console.log(error);
@@ -40,6 +44,7 @@ export const signInAction = async (_: any, formData: FormData): Promise<FormErro
   return await createSession(data.email, data.password);
 };
 
+// Sign up action
 export const signUpAction = async (_: any, formData: FormData): Promise<FormError | undefined> => {
   const { account } = await createAdminClient();
   const { data, error } = await validate(formData, 'signup');
@@ -47,8 +52,17 @@ export const signUpAction = async (_: any, formData: FormData): Promise<FormErro
   if (error) return error;
 
   const { email, password, name } = data as { email: string; password: string; name: string };
+
   try {
-    await account.create(ID.unique(), email, password, name);
+    // Create the account (appwrite auth)
+    const acc = await account.create(ID.unique(), email, password, name);
+    // Save the user in the database
+    const user = await saveUserInDb(acc.$id, null, null);
+    // Create a watchlist for the user
+    const watchList = await createWatchList(user.$id);
+    console.log(acc);
+    console.log(user);
+    console.log(watchList);
   } catch (error) {
     console.error(error);
     return { message: getErrorMessage((error as AppwriteException).type) };
@@ -56,6 +70,7 @@ export const signUpAction = async (_: any, formData: FormData): Promise<FormErro
   return await createSession(email, password);
 };
 
+// Sign out action
 export const signOutAction = async () => {
   const { account } = await createSessionClient();
 
@@ -70,6 +85,7 @@ export const signOutAction = async () => {
   }
 };
 
+// Sign in with Google action
 export const signInWithGoogleAction = async (path: '/signin' | '/signup') => {
   const { account } = await createAdminClient();
   const origin = (await headers()).get('origin');

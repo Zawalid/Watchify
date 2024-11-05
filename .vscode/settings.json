@@ -3,6 +3,7 @@
         "APPWRITE",
         "parentclassname",
         "signin",
-        "signup"
+        "signup",
+        "watchlist"
     ]
 }

@@ -1,4 +1,4 @@
-import { Client, Account, Databases, Avatars, Locale, Users } from 'node-appwrite';
+import { Client, Account, Databases, Avatars, Locale, Users, Permission, Role } from 'node-appwrite';
 import { cookies } from 'next/headers';
 
 export async function createSessionClient() {
@@ -32,11 +32,17 @@ export async function createAdminClient() {
   return {
     account: new Account(client),
     users: new Users(client),
+    databases: new Databases(client),
   };
 }
 
-export const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
-export const USERS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_USERS_COLLECTION_ID!;
+export function setPermissions(userId: string) {
+  return [
+    Permission.read(Role.user(userId)),
+    Permission.update(Role.user(userId)),
+    Permission.delete(Role.user(userId)),
+  ];
+}
 
 export const getErrorMessage = (type: string): string => {
   switch (type) {
