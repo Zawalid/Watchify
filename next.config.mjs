@@ -19,18 +19,18 @@ const nextConfig = {
   redirects: async () => {
     return [
       {
-        source: "/explore",
-        destination: "/explore/movies/popular",
+        source: "/",
+        destination: "/movies/popular",
         permanent: true,
       },
       {
-        source: "/explore/movies",
-        destination: "/explore/movies/popular",
+        source: "/movies",
+        destination: "/movies/popular",
         permanent: true,
       },
       {
-        source: "/explore/tv-shows",
-        destination: "/explore/tv-shows/popular",
+        source: "/tv-shows",
+        destination: "/tv-shows/popular",
         permanent: true,
       },
     ];

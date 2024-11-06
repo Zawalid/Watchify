@@ -20,7 +20,7 @@ export default function SearchForm({ parentClassName, query, ...props }: Props) 
         if (form.query.value.trim() === "") e.preventDefault();
       }}
     >
-      <Input type="search" parentclassname="flex-1" name="query" defaultValue={query} {...props}>
+      <Input type="text" icon="search" parentclassname="flex-1" name="query" defaultValue={query} {...props}>
         {query && <ResetButton />}
       </Input>
       <SearchButton />

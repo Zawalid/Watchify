@@ -9,7 +9,6 @@ declare type Links = {
   unauthenticated: Link[];
 };
 
-declare type IconType = 'name' | 'email' | 'search' | 'password' | 'visible' | 'invisible' | 'title' | 'link';
 
 declare type TMDBResponse = {
   page: number;

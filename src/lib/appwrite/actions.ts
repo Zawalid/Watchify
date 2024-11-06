@@ -12,8 +12,11 @@ const createMediaItem = async (media: Movie | TvShow): Promise<Media | null> => 
   const { id, genre_ids, poster_path, vote_average, media_type } = media;
   const { title, release_date } = media as Movie;
   const { original_name, first_air_date } = media as TvShow;
-  console.log(id);
   try {
+    const mediaList = (await database.listDocuments(DATABASE_ID, MEDIA_COLLECTION_ID)).documents;
+    const existingMedia = mediaList.find((item) => item.tmdb_id === id);
+    if (existingMedia) return existingMedia as unknown as Media;
+
     const data: Omit<Media, '$id' | '$createdAt' | '$updatedAt'> = {
       tmdb_id: id,
       title: title || original_name,
@@ -37,6 +40,9 @@ export const addWatchlistItem = async (media: Movie | TvShow): Promise<Watchlist
   try {
     const watchlist = await getWatchlist();
     const mediaItem = await createMediaItem(media);
+
+    const existingItem = watchlist?.items.find((item) => item.media.tmdb_id === mediaItem?.tmdb_id);
+    if (existingItem) return existingItem as unknown as WatchlistItem;
 
     if (!database || !watchlist || !mediaItem) return null;
 

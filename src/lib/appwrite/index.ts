@@ -48,3 +48,5 @@ export const getWatchlist = async (): Promise<Watchlist | null> => {
     return null;
   }
 };
+
+  

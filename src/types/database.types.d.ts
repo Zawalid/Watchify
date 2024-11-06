@@ -46,7 +46,7 @@ declare global {
     media_type: 'movie' | 'tv';
     vote_average: number;
     poster_path: string | null;
-    genre_ids: number[] | null;
+    genre_ids: number[];
     release_date: string | null;
     $createdAt: string;
     $updatedAt: string;

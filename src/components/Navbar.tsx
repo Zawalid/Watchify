@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import UserDropdown from './UserDropdown';
 import { getUser } from '@/lib/appwrite';
+import { SIGN_IN_ICON } from './ui/Icons';
 
 type NavItemProps = {
   label: string;
@@ -11,11 +12,9 @@ type NavItemProps = {
 
 const links: Links = {
   authenticated: [
-    { label: 'Home', href: '/' },
-    { label: 'Explore', href: '/explore' },
+    { label: 'Explore', href: '/' },
+    { label: 'Watchlist', href: '/watchlist' },
     { label: 'Suggestions', href: '/suggestions' },
-    { label: 'Movies', href: '/movies' },
-    { label: 'Tv Shows', href: '/tv-shows' },
   ],
   unauthenticated: [
     { label: 'Explore', href: '/explore' },
@@ -26,22 +25,7 @@ const links: Links = {
     {
       label: 'Sign In',
       href: '/signin',
-      icon: (
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          strokeWidth={1.5}
-          stroke='currentColor'
-          className='size-6 rotate-180'
-        >
-          <path
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            d='M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75'
-          />
-        </svg>
-      ),
+      icon: SIGN_IN_ICON,
     },
   ],
 };
