@@ -6,6 +6,7 @@ import { cookies, headers } from 'next/headers';
 import { createAdminClient, createSessionClient, getErrorMessage } from '@/lib/appwrite/config';
 import { signInSchema, signUpSchema } from '@/lib/validation';
 import { COOKIE_OPTIONS } from '@/utils/constants';
+import { getUser } from '@/lib/appwrite';
 
 // Validate form data
 const validate = async (formData: FormData, type: 'signin' | 'signup') => {
@@ -63,18 +64,23 @@ export const signUpAction = async (_: any, formData: FormData): Promise<FormErro
 };
 
 // Sign out action
-export const signOutAction = async () => {
+export const signOutAction = async (confirmation?: 'enabled' | 'disabled') => {
   const { account } = await createSessionClient();
+  const user = await getUser();
 
   if (!account) return;
 
   try {
+    if (confirmation && user?.preferences?.sign_out_confirmation !== confirmation) {
+      await account.updatePrefs({ sign_out_confirmation: confirmation });
+    }
     (await cookies()).delete('session');
     await account.deleteSession('current');
-    redirect('/signin');
   } catch (error) {
     console.error(error);
+    return { message: getErrorMessage((error as AppwriteException).type) };
   }
+  redirect('/signin');
 };
 
 // Sign in with Google action

@@ -25,3 +25,10 @@ declare type FormError = {
   message?: string;
   confirm_password?: string[];
 };
+
+declare type disclosure = {
+  isOpen: boolean;
+  onOpen: () => void;
+  onOpenChange: (open: boolean) => void;
+  onClose: () => void;
+};

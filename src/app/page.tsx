@@ -10,7 +10,7 @@ export const metadata = {
 export default async function Page() {
   const watchlist = await getWatchlist();
 
-  console.dir(watchlist, { depth: 5 });
+  // console.dir(watchlist, { depth: 5 });
 
   return (
     <div className='flex h-full flex-col gap-12'>

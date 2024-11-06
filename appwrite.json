@@ -86,7 +86,7 @@
                     "type": "string",
                     "required": true,
                     "array": false,
-                    "size": 100,
+                    "size": 30,
                     "default": null
                 },
                 {
@@ -128,7 +128,7 @@
                     "relatedCollection": "672959df0010a3fb478a",
                     "relationType": "manyToOne",
                     "twoWay": true,
-                    "twoWayKey": "watchlist_id",
+                    "twoWayKey": "watchlist",
                     "onDelete": "cascade",
                     "side": "child"
                 },
@@ -143,20 +143,52 @@
                     "twoWayKey": "watchlist",
                     "onDelete": "setNull",
                     "side": "parent"
+                },
+                {
+                    "key": "all",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "min": 0,
+                    "max": 200000,
+                    "default": null
+                },
+                {
+                    "key": "movies",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "min": 0,
+                    "max": 200000,
+                    "default": null
+                },
+                {
+                    "key": "tv",
+                    "type": "integer",
+                    "required": false,
+                    "array": false,
+                    "min": 0,
+                    "max": 200000,
+                    "default": null
                 }
             ],
             "indexes": []
         },
         {
             "$id": "672959df0010a3fb478a",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
             "databaseId": "6727f7f10026c41951ee",
             "name": "watchlist_items",
             "enabled": true,
-            "documentSecurity": false,
+            "documentSecurity": true,
             "attributes": [
                 {
-                    "key": "watchlist_id",
+                    "key": "watchlist",
                     "type": "relationship",
                     "required": false,
                     "array": false,
@@ -168,7 +200,7 @@
                     "side": "parent"
                 },
                 {
-                    "key": "media_id",
+                    "key": "media",
                     "type": "relationship",
                     "required": false,
                     "array": false,
@@ -178,34 +210,23 @@
                     "twoWayKey": "media",
                     "onDelete": "setNull",
                     "side": "parent"
-                },
-                {
-                    "key": "added_at",
-                    "type": "datetime",
-                    "required": true,
-                    "array": false,
-                    "format": "",
-                    "default": null
                 }
             ],
             "indexes": []
         },
         {
             "$id": "672959ee0039db21aaac",
-            "$permissions": [],
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"users\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
             "databaseId": "6727f7f10026c41951ee",
             "name": "media",
             "enabled": true,
-            "documentSecurity": false,
+            "documentSecurity": true,
             "attributes": [
-                {
-                    "key": "tmdb_id",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 30,
-                    "default": null
-                },
                 {
                     "key": "title",
                     "type": "string",
@@ -249,7 +270,7 @@
                     "required": false,
                     "array": true,
                     "min": 0,
-                    "max": 30,
+                    "max": 30000,
                     "default": null
                 },
                 {
@@ -259,9 +280,30 @@
                     "array": false,
                     "format": "",
                     "default": null
+                },
+                {
+                    "key": "tmdb_id",
+                    "type": "integer",
+                    "required": true,
+                    "array": false,
+                    "min": 0,
+                    "max": 100000000,
+                    "default": null
                 }
             ],
-            "indexes": []
+            "indexes": [
+                {
+                    "key": "index_1",
+                    "type": "unique",
+                    "status": "available",
+                    "attributes": [
+                        "tmdb_id"
+                    ],
+                    "orders": [
+                        "ASC"
+                    ]
+                }
+            ]
         },
         {
             "$id": "67295b9700077282c755",

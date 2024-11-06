@@ -10,14 +10,22 @@ declare global {
     initialsAvatar: string | null;
     locale: Models.Locale;
     watchlist: Watchlist | null;
+    preferences: Preferences | null;
     $createdAt: string;
     $updatedAt: string;
+  };
+
+  declare type Preferences = {
+    sign_out_confirmation?: 'enabled' | 'disabled';
   };
 
   declare type Watchlist = {
     $id: string;
     visibility: 'private' | 'public';
     items: WatchlistItem[] | [];
+    all: number;
+    movies: number;
+    tv: number;
     owner: Profile | null;
     $createdAt: string;
     $updatedAt: string;
@@ -25,15 +33,15 @@ declare global {
 
   declare type WatchlistItem = {
     $id: string;
-    watchlist_id: string | null;
-    media_id: Media | null;
+    watchlist: string | null;
+    media: Media;
     $createdAt: string;
     $updatedAt: string;
   };
 
   declare type Media = {
     $id: string;
-    tmdb_id: string;
+    tmdb_id: number;
     title: string;
     media_type: 'movie' | 'tv';
     vote_average: number;

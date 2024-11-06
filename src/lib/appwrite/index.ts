@@ -1,5 +1,5 @@
 import { DATABASE_ID, PROFILES_COLLECTION_ID, WATCHLIST_COLLECTION_ID } from '@/utils/constants';
-import { createAdminClient, createSessionClient, setPermissions } from './config';
+import { createSessionClient } from './config';
 import bufferToBase64 from '@/utils/bufferToBase64';
 
 export const getUser = async (): Promise<Profile | null> => {
@@ -21,6 +21,10 @@ export const getUser = async (): Promise<Profile | null> => {
       initialsAvatar: bufferToBase64(initialsAvatar),
       locale,
       watchlist,
+      preferences: {
+        sign_out_confirmation: 'enabled',
+        ...user.prefs,
+      },
       $createdAt,
       $updatedAt,
     };
@@ -32,12 +36,13 @@ export const getUser = async (): Promise<Profile | null> => {
   }
 };
 
-export const getWatchlist = async () => {
+export const getWatchlist = async (): Promise<Watchlist | null> => {
   const { database } = await createSessionClient();
   if (!database) return null;
   try {
     const watchList = (await database.listDocuments(DATABASE_ID, WATCHLIST_COLLECTION_ID)).documents[0];
-    return watchList;
+    const { $id, visibility, items, all, movies, tv, owner, $createdAt, $updatedAt } = watchList;
+    return { $id, visibility, items, all, movies, tv, owner, $createdAt, $updatedAt };
   } catch (error) {
     console.error(error);
     return null;

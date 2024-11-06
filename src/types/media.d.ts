@@ -1,4 +1,4 @@
-declare interface Media {
+declare interface TMDBMedia {
   id: number;
   vote_average: number;
   backdrop_path: string;
@@ -7,17 +7,17 @@ declare interface Media {
   genres: { id: number; name: string }[];
   genre_ids: number[];
   original_language: string;
-  media_type?: "tv" | "movie";
+  media_type: 'tv' | 'movie';
 }
 
-declare interface Movie extends Media {
+declare interface Movie extends TMDBMedia {
   original_title: string;
   title: string;
   release_date: string;
   runtime: number;
 }
 
-declare interface TvShow extends Media {
+declare interface TvShow extends TMDBMedia {
   original_name: string;
   name: string;
   status: string;
