@@ -51,9 +51,7 @@ export default async function Navbar() {
   return (
     <nav className='sticky top-0 z-30 mb-12 bg-blur py-3 backdrop-blur-lg'>
       <div className='container flex items-center justify-between'>
-        <Link href='/'>
-          <Image src='/images/logo.svg' alt='watchfolio' width={40} height={20} />
-        </Link>
+        <Image src='/images/logo.svg' alt='watchfolio' width={40} height={20} />
         <ul className='flex items-center gap-8'>
           {links[isAuthenticated ? 'authenticated' : 'unauthenticated'].map(({ label, href, icon }) => (
             <NavItem key={href} label={label} href={href} icon={icon} />

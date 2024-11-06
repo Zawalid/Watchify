@@ -7,4 +7,4 @@ export const metadata = {
   
 
 
-export default WatchlistItems('movie');
+export default WatchlistItems('movies');

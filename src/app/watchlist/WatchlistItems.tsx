@@ -28,23 +28,26 @@ function List({ items, query }: { items: WatchlistItem[]; query: string }) {
   );
 }
 
-const WatchlistItems = (type: 'all' | 'movie' | 'tv') => {
+const WatchlistItems = (type: 'all' | 'movies' | 'tv') => {
   return async function Page({ searchParams }: { searchParams?: Promise<{ query?: string }> }) {
     const query = (await searchParams)?.query || '';
     const watchlist = await getWatchlist();
 
-    const items = type === 'all' ? watchlist?.items : watchlist?.items.filter((item) => item.media.media_type === type);
+    const items =
+      type === 'all'
+        ? watchlist?.items
+        : watchlist?.items.filter((item) => item.media.media_type === (type === 'movies' ? 'movie' : 'tv'));
 
     return (
       <>
         <div className='order-0 flex w-1/2 flex-col gap-4'>
           <h1 className='text-4xl font-semibold text-Grey/50'>Your Watch List</h1>
-          <SearchForm label='Search Your Movies And TV Shows' placeholder='eg. Breaking Bad' query={query}/>
+          <SearchForm label='Search Your Movies And TV Shows' placeholder='eg. Breaking Bad' query={query} />
         </div>
         <div className='order-2 space-y-5'>
           <h2 className='text-2xl font-semibold text-Grey/400'>
-            TV Shows
-            <span className='ml-1 text-base'>(13)</span>
+            {type === 'all' ? 'All' : type === 'movies' ? 'Movies' : 'TV Shows'}
+            <span className='ml-1 text-base'>({watchlist?.[type]})</span>
           </h2>
           <List items={items || []} query={query} />;
         </div>

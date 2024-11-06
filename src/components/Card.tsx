@@ -21,7 +21,7 @@ export default async function Card({ media }: { media: TvShow | Movie }) {
 
   return (
     <div className='group relative flex flex-col'>
-      <CardActions media={media} isAdded={isAdded} />
+      <CardActions media={{ ...media, media_type: type }} isAdded={isAdded} />
       <Link href={getLink(type, title)} className='mb-3 w-full rounded-2xl'>
         <div className='relative h-[220px] w-full overflow-hidden rounded-2xl shadow-lg md:h-[250px] lg:h-[300px]'>
           {media.poster_path ? (

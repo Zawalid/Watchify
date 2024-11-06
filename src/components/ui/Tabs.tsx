@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from '@/hooks/useSearchParams';
 
-type TabItem = { label: string; value: string; link: string };
+type TabItem = { label: string; value: string; link: string; includes?: boolean };
 type TabsIndicators = { [key: string]: { left: number; width: number } };
 type TabsProps = {
   tabs: TabItem[];
@@ -17,7 +17,7 @@ export default function Tabs({ tabs, TABS_INDICATORS, preserveSearchParams = fal
   const pathname = usePathname();
   const { searchParams } = useSearchParams();
 
-  const tab = tabs.find((tab) => pathname === tab.link)?.value;
+  const tab = tabs.find((tab) => pathname === tab.link || (tab.includes && pathname.includes(tab.link)))?.value;
   const currentTab = tab
     ? { tab, indicator: TABS_INDICATORS[tab] }
     : { tab: tabs[0].value, indicator: { left: 8, width: 102 } };

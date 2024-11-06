@@ -2,8 +2,6 @@ import Tabs from '@/components/ui/Tabs';
 import { ExploreAction } from './components/ExploreAction';
 import { Suspense } from 'react';
 
-
-
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className='flex h-full flex-col gap-12'>
@@ -12,13 +10,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <h1 className='text-4xl font-semibold text-Grey/50'>Explore</h1>
           <Tabs
             tabs={[
-              { label: 'Movies', value: 'movies', link: '/movies' },
-              { label: 'TV Shows', value: 'tv-shows', link: '/tv-shows' },
+              { label: 'Movies', value: 'movies', link: '/movies', includes: true },
+              { label: 'TV Shows', value: 'tv-shows', link: '/tv-shows', includes: true },
               { label: 'Search', value: 'search', link: '/search' },
             ]}
-            TABS_INDICATORS={{movies: { left: 8, width: 102 },
-            'tv-shows': { left: 130, width: 112 },
-            search: { left: 262, width: 101 },}}
+            TABS_INDICATORS={{
+              movies: { left: 8, width: 102 },
+              'tv-shows': { left: 130, width: 112 },
+              search: { left: 262, width: 101 },
+            }}
           />
         </div>
         <p className='leading-relaxed text-Grey/300'>

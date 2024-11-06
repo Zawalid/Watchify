@@ -11,7 +11,7 @@ const createMediaItem = async (media: Movie | TvShow): Promise<Media | null> => 
 
   const { id, genre_ids, poster_path, vote_average, media_type } = media;
   const { title, release_date } = media as Movie;
-  const { original_name, first_air_date } = media as TvShow;
+  const { name, first_air_date } = media as TvShow;
   try {
     const mediaList = (await database.listDocuments(DATABASE_ID, MEDIA_COLLECTION_ID)).documents;
     const existingMedia = mediaList.find((item) => item.tmdb_id === id);
@@ -19,8 +19,8 @@ const createMediaItem = async (media: Movie | TvShow): Promise<Media | null> => 
 
     const data: Omit<Media, '$id' | '$createdAt' | '$updatedAt'> = {
       tmdb_id: id,
-      title: title || original_name,
-      media_type: (media_type ?? (media as Movie).release_date) ? 'movie' : 'tv',
+      title: title || name,
+      media_type: media_type,
       vote_average,
       poster_path: `http://image.tmdb.org/t/p/w500${poster_path}`,
       genre_ids,

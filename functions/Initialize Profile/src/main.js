@@ -10,10 +10,8 @@
 import { Client, Databases, ID, Permission, Query, Role, Users } from 'node-appwrite';
 
 const DATABASE_ID = process.env.DATABASE_ID ?? '6727f7f10026c41951ee';
-const PROFILES_COLLECTION_ID =
-  process.env.PROFILES_COLLECTION_ID ?? '6727f8040026ddec4f70';
-const WATCHLISTS_COLLECTION_ID =
-  process.env.WATCHLISTS_COLLECTION_ID ?? '672958cf00155f79db8c';
+const PROFILES_COLLECTION_ID = process.env.PROFILES_COLLECTION_ID ?? '6727f8040026ddec4f70';
+const WATCHLISTS_COLLECTION_ID = process.env.WATCHLISTS_COLLECTION_ID ?? '672958cf00155f79db8c';
 
 function setPermissions(userId) {
   return [
@@ -37,11 +35,9 @@ export default async ({ req, res, log, error }) => {
     const user = await users.get(req.body.userId);
 
     // Check if the user is already initialized
-    const profileList = await databases.listDocuments(
-      DATABASE_ID,
-      PROFILES_COLLECTION_ID,
-      [Query.equal('account_id', user.$id)]
-    );
+    const profileList = await databases.listDocuments(DATABASE_ID, PROFILES_COLLECTION_ID, [
+      Query.equal('account_id', user.$id),
+    ]);
 
     if (profileList.documents.length > 0) {
       log('Profile already initialized for user', user.email);
@@ -67,12 +63,7 @@ export default async ({ req, res, log, error }) => {
     );
     // Log the success
     log('Profile initialized successfully for user', user.email);
-    return res.json('Profile initialized successfully for user', user.email);
   } catch (err) {
     error('Failed to initialize profile', err);
-    return res.json({
-      message: 'Failed to initialize profile',
-      error: err,
-    });
   }
 };
