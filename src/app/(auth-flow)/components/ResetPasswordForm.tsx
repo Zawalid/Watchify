@@ -2,8 +2,8 @@
 
 import { useAction } from '@/hooks/useAction';
 import { Button } from '@nextui-org/button';
-import { resetPassword } from '../../../../(authentication)/(password-reset)/actions';
 import PasswordInput from '@/components/ui/PasswordInput';
+import { resetPassword } from '../actions/password-reset';
 
 export default function Form({ userId, secret }: { userId?: string; secret?: string }) {
   const { errors, formAction, isPending } = useAction((_, formData) => resetPassword({ userId, secret }, formData));
