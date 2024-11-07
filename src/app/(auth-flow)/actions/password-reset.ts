@@ -7,7 +7,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { type AppwriteException } from 'node-appwrite';
 
-export const sendPasswordResetEmail = async (_: any, formData: FormData): Promise<FormError | undefined> => {
+export const sendPasswordResetEmail = async (_: unknown, formData: FormData): Promise<FormError | undefined> => {
   const { account } = await createAdminClient();
   const email = formData.get('email') as string;
 

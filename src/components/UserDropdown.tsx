@@ -49,7 +49,8 @@ export default function UserDropdown({ user }: { user: Profile | null }) {
           disabledKeys={['profile']}
           onAction={(key) => {
             if (key === 'sign out') {
-              user.preferences?.sign_out_confirmation === 'disabled' ? signOutAction() : disclosure.onOpen();
+              if (user.preferences?.sign_out_confirmation === 'disabled') signOutAction();
+              else disclosure.onOpen();
             }
           }}
         >

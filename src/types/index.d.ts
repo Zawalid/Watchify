@@ -2,6 +2,7 @@ type Link = {
   label: string;
   href: string;
   icon?: React.ReactNode;
+  checks?: string[];
 };
 
 declare type Links = {

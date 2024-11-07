@@ -25,7 +25,7 @@ export default function Page() {
         </div>
         <h1 className='text-3xl font-medium text-Primary/50'>Forgot Password ?</h1>
         <p className='text-Grey/300'>
-          Enter your email address below and we'll send you a link to reset your password.
+          Enter your email address below and we&apos;ll send you a link to reset your password.
         </p>
       </div>
       <Form />

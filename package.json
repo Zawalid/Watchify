@@ -24,6 +24,7 @@
     "node-appwrite": "^14.1.0",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "react-rough-notation": "^1.0.5",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",
     "sonner": "^1.5.0",

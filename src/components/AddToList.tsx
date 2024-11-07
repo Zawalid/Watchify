@@ -52,7 +52,7 @@ export default function AddToList({ disclosure }: { disclosure: disclosure }) {
                 sampleData.map((list) => <List key={list.name} list={list} />)
               ) : (
                 <p className='text-center text-Grey/300'>
-                  No lists found. It looks like you haven't created any lists yet. Start by adding a new list.
+                  No lists found. It looks like you haven&apos;t created any lists yet. Start by adding a new list.
                 </p>
               )}
               <Button

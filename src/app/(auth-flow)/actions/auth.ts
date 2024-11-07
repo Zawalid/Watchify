@@ -36,7 +36,7 @@ const createSession = async (email: string, password: string) => {
 };
 
 // Sign in action
-export const signInAction = async (_: any, formData: FormData): Promise<FormError | undefined> => {
+export const signInAction = async (_: unknown, formData: FormData): Promise<FormError | undefined> => {
   const { data, error } = await validate(formData, 'signin');
   console.log(error);
   if (error) return error;
@@ -45,7 +45,7 @@ export const signInAction = async (_: any, formData: FormData): Promise<FormErro
 };
 
 // Sign up action
-export const signUpAction = async (_: any, formData: FormData): Promise<FormError | undefined> => {
+export const signUpAction = async (_: unknown, formData: FormData): Promise<FormError | undefined> => {
   const { account } = await createAdminClient();
   const { data, error } = await validate(formData, 'signup');
 

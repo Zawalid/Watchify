@@ -1,10 +1,10 @@
 import { Suspense, type JSX } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
+// import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { NoResults } from './Status';
 import Card from './Card';
 import { getMediaType } from '@/utils';
 import Pagination from './ui/Pagination';
-import { useSearchParams } from '@/hooks/useSearchParams';
+// import { useSearchParams } from '@/hooks/useSearchParams';
 
 type Props = {
   data: TMDBResponse;

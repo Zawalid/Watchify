@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSearchParams } from '@/hooks/useSearchParams';
@@ -11,9 +10,10 @@ type TabsProps = {
   tabs: TabItem[];
   TABS_INDICATORS: TabsIndicators;
   preserveSearchParams?: boolean;
+  className?: string;
 };
 
-export default function Tabs({ tabs, TABS_INDICATORS, preserveSearchParams = false }: TabsProps) {
+export default function Tabs({ tabs, TABS_INDICATORS, preserveSearchParams = false, className = '' }: TabsProps) {
   const pathname = usePathname();
   const { searchParams } = useSearchParams();
 
@@ -23,7 +23,7 @@ export default function Tabs({ tabs, TABS_INDICATORS, preserveSearchParams = fal
     : { tab: tabs[0].value, indicator: { left: 8, width: 102 } };
 
   return (
-    <ul className='relative flex w-fit gap-5 rounded-xl bg-Black/20 p-2 backdrop-blur-2xl'>
+    <ul className={`relative flex w-fit gap-5 rounded-xl bg-Black/20 p-2 backdrop-blur-2xl ${className}`}>
       <li
         className='absolute top-1/2 -z-10 h-[calc(100%-16px)] -translate-y-1/2 rounded-lg bg-Primary/400 transition-[left] duration-500'
         style={{ left: `${currentTab.indicator.left}px`, width: `${currentTab.indicator.width}px` }}

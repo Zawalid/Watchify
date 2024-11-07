@@ -1,17 +1,16 @@
 export default function bufferToBase64(arrayBuffer : ArrayBuffer) {
-  var base64 = '';
-  var encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  let base64 = '';
+  const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+  const bytes = new Uint8Array(arrayBuffer);
+  const byteLength = bytes.byteLength;
+  const byteRemainder = byteLength % 3;
+  const mainLength = byteLength - byteRemainder;
 
-  var bytes = new Uint8Array(arrayBuffer);
-  var byteLength = bytes.byteLength;
-  var byteRemainder = byteLength % 3;
-  var mainLength = byteLength - byteRemainder;
-
-  var a, b, c, d;
-  var chunk;
+  let a, b, c, d;
+  let chunk;
 
   // Main loop deals with bytes in chunks of 3
-  for (var i = 0; i < mainLength; i = i + 3) {
+  for (let i = 0; i < mainLength; i = i + 3) {
     // Combine the three bytes into a single integer
     chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
 

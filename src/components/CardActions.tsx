@@ -1,6 +1,6 @@
 'use client';
 
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownSection, DropdownItem } from '@nextui-org/dropdown';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/dropdown';
 import { useDisclosure } from '@nextui-org/modal';
 import AddToList from './AddToList';
 import { addWatchlistItem } from '@/lib/appwrite/actions';
