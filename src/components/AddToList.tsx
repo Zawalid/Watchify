@@ -1,6 +1,7 @@
 import { Button } from '@nextui-org/button';
 import { Checkbox } from '@nextui-org/checkbox';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@nextui-org/modal';
+import { ModalHeader, ModalBody, ModalFooter } from '@nextui-org/modal';
+import Modal from './ui/Modal';
 
 type List = {
   name: string;
@@ -28,62 +29,44 @@ export default function AddToList({ disclosure }: { disclosure: disclosure }) {
   const { isOpen, onOpenChange } = disclosure;
 
   return (
-    <Modal
-      placement='center'
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      backdrop='blur'
-      classNames={{
-        body: 'py-6',
-        backdrop: 'bg-black/50 backdrop-blur-[3px]',
-        base: 'border-border blur-bg text-[#a8b0d3]',
-        header: 'border-b-[1px] border-border',
-        footer: 'border-t-[1px] border-border',
-      }}
-    >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex justify-center'>
-              <h4 className='text-xl font-semibold text-Primary/100'>Add to list</h4>
-            </ModalHeader>
-            <ModalBody>
-              {sampleData.length ? (
-                sampleData.map((list) => <List key={list.name} list={list} />)
-              ) : (
-                <p className='text-center text-Grey/300'>
-                  No lists found. It looks like you haven&apos;t created any lists yet. Start by adding a new list.
-                </p>
-              )}
-              <Button
-                className='mt-5 border-border text-white hover:border-Primary/500'
-                variant='ghost'
-                color='primary'
+    <Modal disclosure={disclosure}>
+      {(onClose) => (
+        <>
+          <ModalHeader className='flex justify-center'>
+            <h4 className='text-xl font-semibold text-Primary/100'>Add to list</h4>
+          </ModalHeader>
+          <ModalBody>
+            {sampleData.length ? (
+              sampleData.map((list) => <List key={list.name} list={list} />)
+            ) : (
+              <p className='text-center text-Grey/300'>
+                No lists found. It looks like you haven&apos;t created any lists yet. Start by adding a new list.
+              </p>
+            )}
+            <Button className='mt-5 border-border text-white hover:border-Primary/500' variant='ghost' color='primary'>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                strokeWidth={2}
+                stroke='currentColor'
+                className='size-5'
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  strokeWidth={2}
-                  stroke='currentColor'
-                  className='size-5'
-                >
-                  <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v6m0 0v6m0-6h6m-6 0H6' />
-                </svg>
-                Create new list
-              </Button>
-            </ModalBody>
-            <ModalFooter>
-              <Button className='bg-Grey/800 hover:bg-Grey/700' onPress={onClose}>
-                Close
-              </Button>
-              <Button className='bg-Primary/500 hover:bg-Primary/600' onPress={onClose}>
-                Save
-              </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+                <path strokeLinecap='round' strokeLinejoin='round' d='M12 6v6m0 0v6m0-6h6m-6 0H6' />
+              </svg>
+              Create new list
+            </Button>
+          </ModalBody>
+          <ModalFooter>
+            <Button className='bg-Grey/800 hover:bg-Grey/700' onPress={onClose}>
+              Close
+            </Button>
+            <Button className='bg-Primary/500 hover:bg-Primary/600' onPress={onClose}>
+              Save
+            </Button>
+          </ModalFooter>
+        </>
+      )}
     </Modal>
   );
 }

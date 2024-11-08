@@ -3,21 +3,28 @@
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from '@nextui-org/dropdown';
 import { useDisclosure } from '@nextui-org/modal';
 import AddToList from './AddToList';
-import { addWatchlistItem } from '@/lib/appwrite/actions';
+import { addItemToWatchlist, removeItemFromWatchlist } from '@/lib/appwrite/actions';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { ADD_TO_LIST_ICON, FAVORITE_ICON, WATCHLIST_ADDED_ICON, WATCHLIST_ICON } from './ui/Icons';
+import { ADD_TO_LIST_ICON, FAVORITE_ICON, SIGN_OUT_ICON, WATCHLIST_ADDED_ICON, WATCHLIST_ICON } from './ui/Icons';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function CardActions({ media, isAdded }: { media: Movie | TvShow; isAdded: boolean }) {
   const [exists, setExists] = useState(isAdded);
-  const disclosure = useDisclosure();
+  const confirmationDisclosure = useDisclosure();
+  const listDisclosure = useDisclosure();
+
+  const title = (media as Movie).title || (media as TvShow).name;
 
   const onToggleToWatchlist = async () => {
-    if (exists) return;
+    if (exists) {
+      confirmationDisclosure.onOpen();
+      return;
+    }
     const id = toast.loading('Adding to watchlist...');
-    await addWatchlistItem(media);
+    await addItemToWatchlist(media);
     setExists(true);
-    toast.success(`"${(media as Movie).title || (media as TvShow).name}" was added to your watchlist`, {
+    toast.success(`"${title}" was added to your watchlist`, {
       id,
     });
   };
@@ -67,7 +74,7 @@ export default function CardActions({ media, isAdded }: { media: Movie | TvShow;
             ],
           }}
           onAction={(key) => {
-            if (key === 'add_to_list') disclosure.onOpen();
+            if (key === 'add_to_list') listDisclosure.onOpen();
           }}
         >
           <DropdownItem
@@ -85,7 +92,15 @@ export default function CardActions({ media, isAdded }: { media: Movie | TvShow;
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <AddToList disclosure={disclosure} />
+      <AddToList disclosure={listDisclosure} />
+      <ConfirmationModal
+        disclosure={confirmationDisclosure}
+        icon={SIGN_OUT_ICON}
+        heading='Remove Item'
+        message={`Are you sure you want to remove "${title}" from your watchlist?`}
+        confirmText='Sign Out'
+        action={(confirmation) => removeItemFromWatchlist(media.id, confirmation)}
+      />
     </>
   );
 }

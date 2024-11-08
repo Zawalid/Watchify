@@ -2,53 +2,36 @@
 
 import { DATABASE_ID, MEDIA_COLLECTION_ID, WATCHLIST_ITEMS_COLLECTION_ID } from '@/utils/constants';
 import { createSessionClient } from './config';
-import { ID } from 'node-appwrite';
-import { getWatchlist } from '.';
+import { ID, Query } from 'node-appwrite';
+import { createMedia, createWatchlistItem, getWatchlist, getWatchlistItem } from '.';
 
-const createMediaItem = async (media: Movie | TvShow): Promise<Media | null> => {
-  const { database } = await createSessionClient();
-  if (!database) return null;
-
-  const { id, genre_ids, poster_path, vote_average, media_type } = media;
-  const { title, release_date } = media as Movie;
-  const { name, first_air_date } = media as TvShow;
+export const addItemToWatchlist = async (media: Movie | TvShow): Promise<WatchlistItem | null> => {
   try {
-    const mediaList = (await database.listDocuments(DATABASE_ID, MEDIA_COLLECTION_ID)).documents;
-    const existingMedia = mediaList.find((item) => item.tmdb_id === id);
-    if (existingMedia) return existingMedia as unknown as Media;
+    const { database } = await createSessionClient();
+    const watchlist = await getWatchlist();
+    const mediaItem = await createMedia(media);
 
-    const data: Omit<Media, '$id' | '$createdAt' | '$updatedAt'> = {
-      tmdb_id: id,
-      title: title || name,
-      media_type: media_type,
-      vote_average,
-      poster_path: `http://image.tmdb.org/t/p/w500${poster_path}`,
-      genre_ids,
-      release_date: release_date || first_air_date,
-    };
-    const mediaItem = await database.createDocument(DATABASE_ID, MEDIA_COLLECTION_ID, ID.unique(), data);
-    return mediaItem as unknown as Media;
+    const existingItem = watchlist?.items.find((item) => item.media.tmdb_id === mediaItem?.tmdb_id);
+    if (existingItem) return existingItem as unknown as WatchlistItem;
+
+    if (!database || !watchlist || !mediaItem) throw new Error('Failed to add the item');
+
+    return await createWatchlistItem(watchlist.$id, mediaItem.$id);
   } catch (error) {
     console.error(error);
     return null;
   }
 };
 
-export const addWatchlistItem = async (media: Movie | TvShow): Promise<WatchlistItem | null> => {
-  const { database } = await createSessionClient();
-
+export const removeItemFromWatchlist = async (tmdb_id: number, confirmation?: 'enabled' | 'disabled') => {
   try {
-    const watchlist = await getWatchlist();
-    const mediaItem = await createMediaItem(media);
+    const { database } = await createSessionClient();
+    if (!database) throw new Error('Something went wrong');
 
-    const existingItem = watchlist?.items.find((item) => item.media.tmdb_id === mediaItem?.tmdb_id);
-    if (existingItem) return existingItem as unknown as WatchlistItem;
+    const watchlistItem = await getWatchlistItem(tmdb_id);
+    if (!watchlistItem) throw new Error('Failed to remove the item');
 
-    if (!database || !watchlist || !mediaItem) return null;
-
-    const data = { watchlist: watchlist.$id, media: mediaItem.$id };
-    const watchlistItem = await database.createDocument(DATABASE_ID, WATCHLIST_ITEMS_COLLECTION_ID, ID.unique(), data);
-    return watchlistItem as unknown as WatchlistItem;
+    await database?.deleteDocument(DATABASE_ID, WATCHLIST_ITEMS_COLLECTION_ID, watchlistItem?.$id);
   } catch (error) {
     console.error(error);
     return null;

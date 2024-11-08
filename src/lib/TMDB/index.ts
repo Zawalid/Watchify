@@ -1,17 +1,14 @@
-import { getQueryString } from "../../utils";
+import { getQueryString } from '../../utils';
 
 const options = {
-  url: "https://api.themoviedb.org/3",
+  url: 'https://api.themoviedb.org/3',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     Authorization: `Bearer ${process.env.TMDB_API_TOKEN}`,
   },
 };
 
-const fetchFromApi = async (
-  endpoint: string,
-  queryParams: Record<string, string> = {}
-): Promise<TMDBResponse> => {
+const fetchFromApi = async (endpoint: string, queryParams: Record<string, string> = {}): Promise<TMDBResponse> => {
   const queryString = getQueryString(queryParams);
   const res = await fetch(`${options.url}${endpoint}${queryString}`, {
     headers: options.headers,
@@ -23,11 +20,8 @@ export const search = async (query: string, page?: number): Promise<TMDBResponse
   return await fetchFromApi(`/search/multi`, { query, page: String(page || 1) });
 };
 
-export const getDetails = async (
-  type: "movie" | "tv",
-  slug: string
-): Promise<TvShowDetails | MovieDetails | null> => {
-  if (!type || !slug) throw new Error("Type and Slug are required");
+export const getDetails = async (type: 'movie' | 'tv', slug: string): Promise<TvShowDetails | MovieDetails | null> => {
+  if (!type || !slug) throw new Error('Type and Slug are required');
   const res = await search(slug, 1);
   const id = res.results?.[0]?.id;
 

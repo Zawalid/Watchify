@@ -3,6 +3,7 @@
 import { createAdminClient, getErrorMessage } from '@/lib/appwrite/config';
 import { credentials, resetPasswordSchema } from '@/lib/validation';
 import { COOKIE_OPTIONS } from '@/utils/constants';
+import { getURL } from 'next/dist/shared/lib/utils';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { type AppwriteException } from 'node-appwrite';
@@ -16,7 +17,7 @@ export const sendPasswordResetEmail = async (_: unknown, formData: FormData): Pr
   if (!validated.success) return { email: validated.error.formErrors.formErrors };
 
   try {
-    await account.createRecovery(email, 'http://localhost:3000/reset-password');
+    await account.createRecovery(email, `${getURL()}/reset-password`);
   } catch (error) {
     console.error(error);
     return { message: getErrorMessage((error as AppwriteException).type) };

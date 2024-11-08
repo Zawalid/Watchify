@@ -3,9 +3,9 @@
 import { Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger } from '@nextui-org/dropdown';
 import { Avatar } from '@nextui-org/avatar';
 import { useDisclosure } from '@nextui-org/modal';
-import SignOutModal from './SignOutModal';
 import { signOutAction } from '@/app/(auth-flow)/actions/auth';
 import { SETTINGS_ICON, SIGN_OUT_ICON } from './ui/Icons';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function UserDropdown({ user }: { user: Profile | null }) {
   const disclosure = useDisclosure();
@@ -79,7 +79,14 @@ export default function UserDropdown({ user }: { user: Profile | null }) {
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
-      <SignOutModal disclosure={disclosure} />
+      <ConfirmationModal
+        disclosure={disclosure}
+        icon={SIGN_OUT_ICON}
+        heading='Sign Out'
+        message='Are you sure you want to sign out?'
+        confirmText='Sign Out'
+        action={signOutAction}
+      />
     </>
   );
 }

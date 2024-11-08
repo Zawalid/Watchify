@@ -37,3 +37,16 @@ export const getMediaType = (media: TvShow | Movie): 'movie' | 'tv' => {
   }
   throw new Error('Unknown media type');
 };
+
+function getUrl() {
+  const host =
+    process.env.NODE_ENV === 'development'
+      ? 'localhost:3000'
+      : process.env.VERCEL_ENV === 'production'
+        ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+        : process.env.VERCEL_BRANCH_URL;
+
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+
+  return `${protocol}://${host}`;
+}
