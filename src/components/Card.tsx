@@ -5,14 +5,15 @@ import Link from 'next/link';
 import placeholderImage from '@/images/placeholder.png';
 import { placeholder } from '@/utils/shimmer-placeholder';
 import CardActions from './CardActions';
-import { getWatchlist } from '@/lib/appwrite';
+import { getUser, getWatchlist } from '@/lib/appwrite';
 
 const getLink = (type: string, name: string) => {
   return `/${type === 'tv' ? 'tv-shows' : 'movies'}/${slugify(name)}`;
 };
 
 export default async function Card({ media }: { media: TvShow | Movie }) {
-  const watchlist = await getWatchlist();
+  const user = await getUser();
+  const watchlist = user ? await getWatchlist() : null;
   const { poster_path, vote_average, genre_ids } = media;
   const type = getMediaType(media);
   const title = type === 'movie' ? (media as Movie).title : (media as TvShow).name;
@@ -21,7 +22,11 @@ export default async function Card({ media }: { media: TvShow | Movie }) {
 
   return (
     <div className='group relative flex flex-col'>
-      <CardActions media={{ ...media, media_type: type }} isAdded={isAdded} />
+      <CardActions
+        media={{ ...media, media_type: type }}
+        isAdded={isAdded}
+        user={user}
+      />
       <Link href={getLink(type, title)} className='mb-3 w-full rounded-2xl'>
         <div className='relative h-[220px] w-full overflow-hidden rounded-2xl shadow-lg md:h-[250px] lg:h-[300px]'>
           {media.poster_path ? (

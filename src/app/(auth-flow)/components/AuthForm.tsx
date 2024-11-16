@@ -14,34 +14,20 @@ export default function Form({ type }: { type: 'signin' | 'signup' }) {
     <form className='flex flex-col gap-4' action={formAction}>
       {type === 'signup' && (
         <Input
-          type='text'
           name='name'
           icon='name'
-          label='Full Name'
+          label='Name'
           placeholder='eg. John Doe'
           defaultValue={'Walid Zakan'}
           error={errors?.name?.[0]}
         />
       )}
-      <Input
-        type='email'
-        name='email'
-        label='Email'
-        placeholder='eg. hello@example.com'
-        defaultValue={'walid@gmail.com'}
-        error={errors?.email?.[0]}
-      />
-      <PasswordInput
-        name='password'
-        label='Password'
-        placeholder='*********'
-        defaultValue={'password'}
-        error={errors?.password?.[0]}
-      />
+      <Input type='email' name='email' label='Email' defaultValue={'walid@gmail.com'} error={errors?.email?.[0]} />
+      <PasswordInput name='password' label='Password' defaultValue={'password'} error={errors?.password?.[0]} />
       {type === 'signin' && (
         <Link
           href='/forgot-password'
-          className='text-end text-sm text-Primary/400 transition-colors duration-200 hover:text-Primary/500'
+          className='ml-auto w-fit text-end text-sm text-Primary/400 transition-colors duration-200 hover:text-Primary/500'
         >
           Forgot your password?
         </Link>

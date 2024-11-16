@@ -1,7 +1,7 @@
 import Form from '@/app/(auth-flow)/components/AuthForm';
 
 export const metadata = {
-  title: 'Sign In',
+  title: 'Sign In | Watchfolio',
   description: 'Sign In page',
 };
 

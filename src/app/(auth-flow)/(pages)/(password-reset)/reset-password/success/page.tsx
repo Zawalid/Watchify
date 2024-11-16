@@ -4,7 +4,7 @@ import Form from '@/app/(auth-flow)/components/ResetSuccessForm';
 import BackButton from '@/app/(auth-flow)/components/BackButton';
 
 export const metadata = {
-  title: 'Password reset',
+  title: 'Password reset | Watchfolio',
   description: 'Your password was reset successfully',
 };
 

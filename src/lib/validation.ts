@@ -1,6 +1,10 @@
 import { z } from 'zod';
 
-export const credentials = {
+export const common = {
+  name: z
+    .string()
+    .min(1, { message: 'Please enter your name' })
+    .min(3, { message: 'Name must be at least 3 characters long' }),
   email: z
     .string()
     .min(1, { message: 'Please enter your email address' })
@@ -12,22 +16,31 @@ export const credentials = {
     .max(32, { message: 'Password must be less than 32 characters' }),
 };
 
-export const signInSchema = z.object(credentials);
+export const signInSchema = z.object({ email: common.email, password: common.password });
 
-export const signUpSchema = z.object({
-  name: z
-    .string()
-    .min(1, { message: 'Please enter your full name' })
-    .min(3, { message: 'Full name must be at least 3 characters long' }),
-  ...credentials,
-});
+export const signUpSchema = z.object(common);
 
 export const resetPasswordSchema = z
-  .object({
-    password: credentials.password,
-    confirm_password: credentials.password,
-  })
+  .object({ password: common.password, confirm_password: common.password })
   .refine((data) => data.password === data.confirm_password, {
+    message: 'Passwords do not match. Please check the password and confirm password.',
+    path: ['confirm_password'],
+  });
+
+export const profileSchema = z.object({
+  name: common.name,
+});
+
+export const changeEmailSchema = z
+  .object({ email: common.email, confirm_email: common.email, password: common.password })
+  .refine((data) => data.email === data.confirm_email, {
+    message: 'Emails do not match. Please check the email and confirm email.',
+    path: ['confirm_email'],
+  });
+
+export const changePasswordSchema = z
+  .object({ email: common.email, new_password: common.password, confirm_password: common.password })
+  .refine((data) => data.new_password === data.confirm_password, {
     message: 'Passwords do not match. Please check the password and confirm password.',
     path: ['confirm_password'],
   });

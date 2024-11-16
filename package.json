@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
+    "@hookform/resolvers": "^3.9.1",
     "@nextui-org/avatar": "^2.0.33",
     "@nextui-org/button": "^2.0.38",
     "@nextui-org/checkbox": "^2.1.5",
@@ -24,6 +25,7 @@
     "node-appwrite": "^14.1.0",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
+    "react-hook-form": "^7.53.2",
     "react-rough-notation": "^1.0.5",
     "server-only": "^0.0.1",
     "sharp": "^0.33.5",

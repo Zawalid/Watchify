@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -38,7 +39,7 @@ export const getMediaType = (media: TvShow | Movie): 'movie' | 'tv' => {
   throw new Error('Unknown media type');
 };
 
-function getUrl() {
+export function getUrl() {
   const host =
     process.env.NODE_ENV === 'development'
       ? 'localhost:3000'
@@ -50,3 +51,20 @@ function getUrl() {
 
   return `${protocol}://${host}`;
 }
+
+export const actionToast = async (
+  action: () => Promise<unknown>,
+  loadingMessage: string,
+  successMessage: string,
+  errorMessage?: string
+) => {
+  let id;
+  try {
+    id = toast.loading(loadingMessage);
+    await action();
+    toast.success(successMessage, { id });
+  } catch (error) {
+    console.log("error");
+    errorMessage && toast.error(errorMessage, { id });
+  }
+};

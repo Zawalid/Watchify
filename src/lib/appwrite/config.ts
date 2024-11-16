@@ -1,6 +1,7 @@
 import { Client, Account, Databases, Avatars, Locale, Users, Permission, Role } from 'node-appwrite';
 import { cookies } from 'next/headers';
 
+//* Clients
 export async function createSessionClient() {
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
@@ -36,6 +37,7 @@ export async function createAdminClient() {
   };
 }
 
+//* Utils
 export function setPermissions(userId: string) {
   return [
     Permission.read(Role.user(userId)),
@@ -83,3 +85,11 @@ export const getErrorMessage = (type: string): string => {
       return 'Something went wrong. Please try again.';
   }
 };
+
+//* Collections
+
+export const DATABASE_ID = process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!;
+export const PROFILES_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_PROFILES_COLLECTION_ID!;
+export const WATCHLISTS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_WATCHLISTS_COLLECTION_ID!;
+export const WATCHLISTS_ITEMS_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_WATCHLISTS_ITEMS_COLLECTION_ID!;
+export const MEDIA_COLLECTION_ID = process.env.NEXT_PUBLIC_APPWRITE_MEDIA_COLLECTION_ID!;

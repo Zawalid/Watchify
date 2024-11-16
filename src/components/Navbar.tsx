@@ -18,7 +18,7 @@ const links: Links = {
   ],
   unauthenticated: [
     explore,
-    { label: 'Suggest me', href: '/suggest' },
+    // { label: 'Suggest me', href: '/suggest' },
     { label: 'Sign In', href: '/signin', icon: SIGN_IN_ICON },
   ],
 };

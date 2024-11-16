@@ -1,11 +1,18 @@
 'use server';
 
-import { DATABASE_ID, MEDIA_COLLECTION_ID, WATCHLIST_ITEMS_COLLECTION_ID } from '@/utils/constants';
+import { DATABASE_ID, WATCHLISTS_ITEMS_COLLECTION_ID } from './config';
 import { createSessionClient } from './config';
-import { ID, Query } from 'node-appwrite';
-import { createMedia, createWatchlistItem, getWatchlist, getWatchlistItem } from '.';
+import {
+  createMedia,
+  createWatchlistItem,
+  getWatchlist,
+  getWatchlistItem,
+  updatePreferences,
+  updateWatchlistItemsCount,
+} from '.';
+import { revalidatePath } from 'next/cache';
 
-export const addItemToWatchlist = async (media: Movie | TvShow): Promise<WatchlistItem | null> => {
+export const addItemToWatchlist = async (media: Movie | TvShow) => {
   try {
     const { database } = await createSessionClient();
     const watchlist = await getWatchlist();
@@ -16,10 +23,12 @@ export const addItemToWatchlist = async (media: Movie | TvShow): Promise<Watchli
 
     if (!database || !watchlist || !mediaItem) throw new Error('Failed to add the item');
 
-    return await createWatchlistItem(watchlist.$id, mediaItem.$id);
+    await createWatchlistItem(watchlist.$id, mediaItem.$id);
+    await updateWatchlistItemsCount();
+    revalidatePath('/watchList');
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 };
 
@@ -31,7 +40,10 @@ export const removeItemFromWatchlist = async (tmdb_id: number, confirmation?: 'e
     const watchlistItem = await getWatchlistItem(tmdb_id);
     if (!watchlistItem) throw new Error('Failed to remove the item');
 
-    await database?.deleteDocument(DATABASE_ID, WATCHLIST_ITEMS_COLLECTION_ID, watchlistItem?.$id);
+    await database?.deleteDocument(DATABASE_ID, WATCHLISTS_ITEMS_COLLECTION_ID, watchlistItem?.$id);
+    await updateWatchlistItemsCount();
+    revalidatePath('/watchList');
+    await updatePreferences('remove_from_watchlist_confirmation', confirmation);
   } catch (error) {
     console.error(error);
     return null;

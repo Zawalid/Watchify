@@ -8,7 +8,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const tvShow = await getDetails("tv", slug);
 
   return {
-    title: (tvShow as TvShow).name,
+    title: `${(tvShow as TvShow).name} | Watchfolio`,
   };
 }
 

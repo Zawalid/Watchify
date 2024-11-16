@@ -17,6 +17,7 @@ declare global {
 
   declare type Preferences = {
     sign_out_confirmation?: 'enabled' | 'disabled';
+    remove_from_watchlist_confirmation?: 'enabled' | 'disabled';
   };
 
   declare type Watchlist = {

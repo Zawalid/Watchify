@@ -4,7 +4,7 @@ import CardsList from "@/components/CardsList";
 import { search } from "@/lib/TMDB";
 
 export const metadata = {
-  title: "Search",
+  title: "Search | Watchfolio",
   description: "Search for movies and TV shows",
 };
 

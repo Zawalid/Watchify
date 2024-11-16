@@ -4,7 +4,7 @@ import Form from '@/app/(auth-flow)/components/ResetPasswordForm';
 import BackButton from '@/app/(auth-flow)/components/BackButton';
 
 export const metadata = {
-  title: 'Set new password',
+  title: 'Set new password | Watchfolio',
   description: 'Set a new password for your account',
 };
 

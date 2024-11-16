@@ -6,7 +6,7 @@ import { cookies, headers } from 'next/headers';
 import { createAdminClient, createSessionClient, getErrorMessage } from '@/lib/appwrite/config';
 import { signInSchema, signUpSchema } from '@/lib/validation';
 import { COOKIE_OPTIONS } from '@/utils/constants';
-import { getUser } from '@/lib/appwrite';
+import { getUser, updatePreferences } from '@/lib/appwrite';
 
 // Validate form data
 const validate = async (formData: FormData, type: 'signin' | 'signup') => {
@@ -66,14 +66,11 @@ export const signUpAction = async (_: unknown, formData: FormData): Promise<Form
 // Sign out action
 export const signOutAction = async (confirmation?: 'enabled' | 'disabled') => {
   const { account } = await createSessionClient();
-  const user = await getUser();
 
   if (!account) return;
 
   try {
-    if (confirmation && user?.preferences?.sign_out_confirmation !== confirmation) {
-      await account.updatePrefs({ sign_out_confirmation: confirmation });
-    }
+    await updatePreferences('sign_out_confirmation', confirmation);
     (await cookies()).delete('session');
     await account.deleteSession('current');
   } catch (error) {

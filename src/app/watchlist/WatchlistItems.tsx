@@ -1,11 +1,14 @@
 import Card from '@/components/Card';
 import SearchForm from '@/components/SearchForm';
+import { EmptyWatchList } from '@/components/Status';
 import { getWatchlist } from '@/lib/appwrite';
 
-function List({ items, query }: { items: WatchlistItem[]; query: string }) {
+function List({ items, query, type }: { items: WatchlistItem[]; query: string; type: 'all' | 'movies' | 'tv' }) {
   const list = items
     .map((item) => item.media)
     .filter((media) => media.title.toLowerCase().includes(query.toLowerCase()));
+
+  if (!items.length) return <EmptyWatchList className='order-5' type={type} />;
 
   return (
     <div className='order-5 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] items-start gap-5 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))]'>
@@ -50,7 +53,7 @@ const WatchlistItems = (type: 'all' | 'movies' | 'tv') => {
           {type === 'all' ? 'All' : type === 'movies' ? 'Movies' : 'TV Shows'}
           <span className='ml-1 text-base'>({watchlist?.[type]})</span>
         </h2>
-        <List items={items || []} query={query} />
+        <List items={items || []} query={query} type={type} />
       </>
     );
   };

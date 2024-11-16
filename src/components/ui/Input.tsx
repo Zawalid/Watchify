@@ -36,10 +36,10 @@ export default function Input({ children, type, icon, label, ...props }: InputPr
         <input
           type={type || 'text'}
           className={cn(
-            'peer relative z-10 w-full rounded-xl border-2 border-Grey/800 bg-Black/10 pb-3 pl-14 pr-4 pt-7 text-sm text-Grey/100 outline-none placeholder:text-sm placeholder:text-transparent focus:border-Primary/500 focus:placeholder:text-Grey/600',
+            'peer relative z-10 w-full rounded-xl border-2 border-Grey/800 bg-Black/10 pb-3 pl-14 pr-4 pt-7 text-sm text-Grey/100 outline-none placeholder:text-sm placeholder:text-transparent read-only:bg-transparent focus:border-Primary/500 focus:placeholder:text-Grey/600',
             error ? 'border-Error/500 focus:border-Error/500' : 'border-Grey/800 focus:border-Primary/500'
           )}
-          placeholder={placeholder}
+          placeholder={type === 'email' ? 'eg. hello@example.com' : placeholder}
           {...props}
         />
         <label className='absolute left-14 top-1/2 z-0 -translate-y-1/2 cursor-text text-sm text-Grey/600 transition-all duration-300 focus:text-white peer-focus:z-10 peer-focus:-translate-y-6 peer-focus:text-Grey/400 peer-[&:not(:placeholder-shown)]:z-10 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-Grey/400'>

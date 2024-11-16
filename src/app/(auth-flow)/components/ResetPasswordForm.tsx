@@ -13,14 +13,14 @@ export default function Form({ userId, secret }: { userId?: string; secret?: str
       <PasswordInput
         name='password'
         label='Password'
-        placeholder='*********'
+        
         defaultValue={'password'}
         error={errors?.password?.[0]}
       />
       <PasswordInput
         name='confirm_password'
         label='Confirm Password'
-        placeholder='*********'
+        
         defaultValue={'password'}
         error={errors?.confirm_password?.[0]}
       />

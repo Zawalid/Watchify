@@ -2,9 +2,9 @@ import {
   DATABASE_ID,
   MEDIA_COLLECTION_ID,
   PROFILES_COLLECTION_ID,
-  WATCHLIST_COLLECTION_ID,
-  WATCHLIST_ITEMS_COLLECTION_ID,
-} from '@/utils/constants';
+  WATCHLISTS_COLLECTION_ID,
+  WATCHLISTS_ITEMS_COLLECTION_ID,
+} from './config';
 import { createSessionClient } from './config';
 import bufferToBase64 from '@/utils/bufferToBase64';
 import { ID, Query } from 'node-appwrite';
@@ -12,7 +12,7 @@ import { ID, Query } from 'node-appwrite';
 export const getUser = async (): Promise<Profile | null> => {
   try {
     const { account, database, locale, avatars } = await createSessionClient();
-    if (!account || !database) throw new Error('Something went wrong');
+    if (!account || !database) return null;
 
     const user = await account.get();
     const initialsAvatar = await avatars.getInitials(user.name);
@@ -48,12 +48,71 @@ export const getWatchlist = async (): Promise<Watchlist | null> => {
     const { database } = await createSessionClient();
     if (!database) throw new Error('Something went wrong');
 
-    const watchList = (await database.listDocuments(DATABASE_ID, WATCHLIST_COLLECTION_ID)).documents[0];
+    const watchList = (await database.listDocuments(DATABASE_ID, WATCHLISTS_COLLECTION_ID)).documents[0];
     const { $id, visibility, items, all, movies, tv, owner, $createdAt, $updatedAt } = watchList;
     return { $id, visibility, items, all, movies, tv, owner, $createdAt, $updatedAt };
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
+  }
+};
+
+export const getWatchlistItem = async (tmdb_id: number): Promise<WatchlistItem | null> => {
+  try {
+    const { database } = await createSessionClient();
+    if (!database) throw new Error('Something went wrong');
+
+    const watchlist = await getWatchlist();
+    const media = (await database?.listDocuments(DATABASE_ID, MEDIA_COLLECTION_ID, [Query.equal('tmdb_id', tmdb_id)]))
+      ?.documents[0];
+
+    if (!media || !watchlist) throw new Error('Media not found');
+
+    const watchlistItem = (
+      await database?.listDocuments(DATABASE_ID, WATCHLISTS_ITEMS_COLLECTION_ID, [
+        Query.equal('watchlist', watchlist.$id),
+        Query.equal('media', media.$id),
+      ])
+    )?.documents[0];
+
+    return watchlistItem as unknown as WatchlistItem;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const createWatchlistItem = async (watchlistId: string, mediaId: string): Promise<WatchlistItem | null> => {
+  try {
+    const { database } = await createSessionClient();
+    if (!database) throw new Error('Something went wrong');
+
+    const watchlistItem = await database.createDocument(DATABASE_ID, WATCHLISTS_ITEMS_COLLECTION_ID, ID.unique(), {
+      watchlist: watchlistId,
+      media: mediaId,
+    });
+    return watchlistItem as unknown as WatchlistItem;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const updateWatchlistItemsCount = async () => {
+  try {
+    const { database } = await createSessionClient();
+    const watchlist = await getWatchlist();
+
+    if (!database || !watchlist) throw new Error('Something went wrong');
+
+    const all = watchlist.items.length;
+    const movies = watchlist.items.filter((item) => item.media.media_type === 'movie').length;
+    const tv = watchlist.items.filter((item) => item.media.media_type === 'tv').length;
+
+    await database.updateDocument(DATABASE_ID, WATCHLISTS_COLLECTION_ID, watchlist.$id, { all, movies, tv });
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };
 
@@ -83,47 +142,20 @@ export const createMedia = async (media: Movie | TvShow): Promise<Media | null> 
     return mediaItem as unknown as Media;
   } catch (error) {
     console.error(error);
-    return null;
+    throw error;
   }
 };
 
-export const createWatchlistItem = async (watchlistId: string, mediaId: string): Promise<WatchlistItem | null> => {
+export const updatePreferences = async (key: keyof Preferences, value?: string) => {
   try {
-    const { database } = await createSessionClient();
-    if (!database) throw new Error('Something went wrong');
+    const { account } = await createSessionClient();
+    const user = await getUser();
 
-    const watchlistItem = await database.createDocument(DATABASE_ID, WATCHLIST_ITEMS_COLLECTION_ID, ID.unique(), {
-      watchlist: watchlistId,
-      media: mediaId,
-    });
-    return watchlistItem as unknown as WatchlistItem;
+    if (!account || !user) return;
+
+    if (value && user?.preferences?.[key] !== value) await account.updatePrefs({ [key]: value });
   } catch (error) {
     console.error(error);
-    return null;
-  }
-};
-
-export const getWatchlistItem = async (tmdb_id: number): Promise<WatchlistItem | null> => {
-  try {
-    const { database } = await createSessionClient();
-    if (!database) throw new Error('Something went wrong');
-
-    const watchlist = await getWatchlist();
-    const media = (await database?.listDocuments(DATABASE_ID, MEDIA_COLLECTION_ID, [Query.equal('tmdb_id', tmdb_id)]))
-      ?.documents[0];
-
-    if (!media || !watchlist) throw new Error('Media not found');
-
-    const watchlistItem = (
-      await database?.listDocuments(DATABASE_ID, WATCHLIST_ITEMS_COLLECTION_ID, [
-        Query.equal('watchlist', watchlist.$id),
-        Query.equal('media', media.$id),
-      ])
-    )?.documents[0];
-
-    return watchlistItem as unknown as WatchlistItem;
-  } catch (error) {
-    console.error(error);
-    return null;
+    throw error;
   }
 };

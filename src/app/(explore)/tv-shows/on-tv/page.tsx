@@ -2,7 +2,7 @@ import { getOnTheAirTvShows } from "@/lib/TMDB";
 import WithPagination from "../../components/WithPagination";
 
 export const metadata = {
-  title: "On The Air TV Shows",
+  title: "On The Air TV Shows | Watchfolio",
   description: "List of TV shows currently on the air",
 };
 

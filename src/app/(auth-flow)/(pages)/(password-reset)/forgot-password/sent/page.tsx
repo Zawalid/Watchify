@@ -5,7 +5,7 @@ import { sendPasswordResetEmail } from '@/app/(auth-flow)/actions/password-reset
 import BackButton from '@/app/(auth-flow)/components/BackButton';
 
 export const metadata = {
-  title: 'Check your email',
+  title: 'Check your email | Watchfolio',
   description: 'Password reset email sent successfully',
 };
 

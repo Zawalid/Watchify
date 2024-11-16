@@ -2,7 +2,7 @@ import BackButton from '@/app/(auth-flow)/components/BackButton';
 import Form from '@/app/(auth-flow)/components/ForgotPasswordForm';
 
 export const metadata = {
-  title: 'Forgot Password ?',
+  title: 'Forgot Password ? | Watchfolio',
   description: 'Reset your password page',
 };
 

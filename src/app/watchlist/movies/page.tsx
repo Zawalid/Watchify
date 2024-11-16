@@ -2,7 +2,7 @@ import WatchlistItems from '../WatchlistItems';
 
 
 export const metadata = {
-    title: 'Your Watchlist | Movies',
+    title: 'Your Watchlist - Movies | Watchfolio',
   };
   
 
