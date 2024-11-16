@@ -1,7 +1,7 @@
 import { Modal as M, ModalContent, ModalProps } from '@nextui-org/modal';
 
 interface Props extends ModalProps {
-  children: (onClose: () => void) => React.ReactNode;
+  children: React.ReactNode;
   disclosure: disclosure;
 }
 
@@ -23,7 +23,7 @@ export default function Modal({ children, disclosure, ...props }: Props) {
       }}
       {...props}
     >
-      <ModalContent>{(onClose) => <>{children(onClose)}</>}</ModalContent>
+      <ModalContent>{children}</ModalContent>
     </M>
   );
 }

@@ -13,6 +13,7 @@ declare global {
     preferences: Preferences | null;
     $createdAt: string;
     $updatedAt: string;
+    emailVerification: boolean;
   };
 
   declare type Preferences = {

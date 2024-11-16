@@ -29,8 +29,6 @@ export default function ConfirmationModal({
 
   return (
     <Modal disclosure={disclosure}>
-      {(onClose) => (
-        <>
           <ModalHeader className='flex items-center gap-4'>
             <div className='grid size-10 place-content-center rounded-full bg-Warning/600 text-white'>{icon}</div>
             <h2 className='text-xl font-semibold text-Primary/100'>{heading}</h2>
@@ -50,21 +48,19 @@ export default function ConfirmationModal({
             )}
           </ModalBody>
           <ModalFooter>
-            <Button className='bg-Grey/800 hover:bg-Grey/700' onPress={onClose}>
+            <Button className='bg-Grey/800 hover:bg-Grey/700' onPress={disclosure.onClose}>
               Cancel
             </Button>
             <Button
               color='danger'
               onPress={() => {
                 action(confirmation);
-                onClose();
+                disclosure.onClose();
               }}
             >
               {confirmText}
             </Button>
           </ModalFooter>
-        </>
-      )}
     </Modal>
   );
 }

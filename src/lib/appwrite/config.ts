@@ -52,6 +52,7 @@ export const getErrorMessage = (type: string): string => {
     case 'user_already_exists':
     case 'user_email_already_exists':
     case 'user_phone_already_exists':
+    case 'user_target_already_exists':
       return 'An account with this email already exists. Please try again with a different email.';
     // Invalid credentials
     case 'user_invalid_credentials':
