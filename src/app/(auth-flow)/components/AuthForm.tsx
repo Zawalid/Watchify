@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { useAction } from '@/hooks/useAction';
 import { Button } from '@nextui-org/button';
 
+
+// Todo : Remove default values
+
 export default function Form({ type }: { type: 'signin' | 'signup' }) {
   const { errors, formAction, isPending } = useAction(type === 'signin' ? signInAction : signUpAction);
 

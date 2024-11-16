@@ -39,7 +39,7 @@ export const changeEmailSchema = z
   });
 
 export const changePasswordSchema = z
-  .object({ email: common.email, new_password: common.password, confirm_password: common.password })
+  .object({ password: common.password, new_password: common.password, confirm_password: common.password })
   .refine((data) => data.new_password === data.confirm_password, {
     message: 'Passwords do not match. Please check the password and confirm password.',
     path: ['confirm_password'],

@@ -8,6 +8,8 @@ import Modal from '@/components/ui/Modal';
 import { Button } from '@nextui-org/button';
 import { ModalBody, ModalFooter, ModalHeader, useDisclosure } from '@nextui-org/modal';
 import PasswordInput from '@/components/ui/PasswordInput';
+import { updatePassword } from '../actions/account';
+import { toast } from 'sonner';
 
 type FormData = z.infer<typeof changePasswordSchema>;
 
@@ -17,12 +19,31 @@ export default function ChangePassword() {
     handleSubmit,
     reset,
     formState: { errors, isValid, isSubmitting },
+    setError,
   } = useForm<FormData>({ resolver: zodResolver(changePasswordSchema), mode: 'onChange' });
   const disclosure = useDisclosure();
 
   const close = () => {
     disclosure.onClose();
     reset();
+  };
+
+  const onSubmit = async (data: FormData) => {
+    const error = await updatePassword(data.password, data.new_password);
+    if (error) {
+      switch (error.type) {
+        case 'password_recently_used':
+        case 'password_personal_data':
+          return setError('new_password', { message: error.message });
+        case 'user_invalid_credentials':
+          return setError('password', { message: 'The password you entered is incorrect. Please try again.' });
+        default:
+          toast.error(error.message);
+      }
+    } else {
+      toast.success('Password updated successfully.');
+      close();
+    }
   };
 
   return (
@@ -41,25 +62,25 @@ export default function ChangePassword() {
             Please enter your current password and new password to change your password.
           </p>
         </ModalHeader>
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <ModalBody className='flex flex-col gap-5'>
             <PasswordInput
-              {...register('email')}
+              {...register('password')}
               name='password'
               label='Current Password'
-              error={errors.email?.message}
+              error={errors.password?.message}
             />
             <PasswordInput
-              {...register('email')}
+              {...register('new_password')}
               name='new_password'
               label='New Password'
-              error={errors.email?.message}
+              error={errors.new_password?.message}
             />
             <PasswordInput
-              {...register('email')}
+              {...register('confirm_password')}
               name='confirm_password'
               label='Confirm Password'
-              error={errors.email?.message}
+              error={errors.confirm_password?.message}
             />
           </ModalBody>
           <ModalFooter>
