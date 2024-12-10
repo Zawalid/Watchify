@@ -26,7 +26,7 @@ export default function UserDropdown({ user }: { user: Profile | null }) {
             src={avatar}
             isBordered
             classNames={{
-              base: avatar ? 'bg-white' : 'bg-gradient-to-br  from-[#7b6ef6] to-[#1ea5fc]',
+              base: avatar ? 'bg-transparent' : 'bg-gradient-to-br  from-[#7b6ef6] to-[#1ea5fc]',
               icon: 'text-Primary/100',
             }}
             color='secondary'

@@ -31,7 +31,7 @@ export const getDetails = async (type: 'movie' | 'tv', slug: string): Promise<Tv
   return await details.json();
 };
 
-// TV Shows
+// Series
 export const searchTvShows = async (query: string, page?: number): Promise<TMDBResponse> => {
   return await fetchFromApi(`/search/tv`, { query, page: String(page || 1) });
 };

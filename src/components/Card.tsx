@@ -8,7 +8,7 @@ import CardActions from './CardActions';
 import { getUser, getWatchlist } from '@/lib/appwrite';
 
 const getLink = (type: string, name: string) => {
-  return `/${type === 'tv' ? 'tv-shows' : 'movies'}/${slugify(name)}`;
+  return `/${type === 'tv' ? 'series' : 'movies'}/${slugify(name)}`;
 };
 
 export default async function Card({ media }: { media: TvShow | Movie }) {

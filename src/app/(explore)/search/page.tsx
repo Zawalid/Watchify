@@ -5,7 +5,7 @@ import { search } from "@/lib/TMDB";
 
 export const metadata = {
   title: "Search | Watchfolio",
-  description: "Search for movies and TV shows",
+  description: "Search for movies and series",
 };
 
 export default async function Page(props: {

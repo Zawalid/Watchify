@@ -9,7 +9,7 @@ export function NoResults({ children }: { children?: ReactNode }) {
         <Image src='/images/empty.svg' alt='' fill />
       </div>{' '}
       <h2 className='text-xl font-semibold text-Grey/50 sm:text-2xl'>Sorry, No results found</h2>
-      <p className='font-medium text-Grey/300'>There are no movies or TV shows matching your search terms.</p>
+      <p className='font-medium text-Grey/300'>There are no movies or series matching your search terms.</p>
       {children}
     </div>
   );
@@ -47,7 +47,7 @@ export function EmptyWatchList({
         >
           add
         </Link>
-        some {type === 'all' ? 'movies or TV shows' : type} to fill your list.
+        some {type === 'all' ? 'movies or series' : type} to fill your list.
       </p>
     </div>
   );

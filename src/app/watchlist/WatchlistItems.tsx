@@ -44,13 +44,13 @@ const WatchlistItems = (type: 'all' | 'movies' | 'tv') => {
     return (
       <>
         <SearchForm
-          label='Search Your Movies And TV Shows'
+          label='Search Your Movies And Series'
           placeholder='eg. Breaking Bad'
           parentClassName='order-1 w-1/2'
           query={query}
         />
         <h2 className='order-4 text-2xl font-semibold text-Grey/400'>
-          {type === 'all' ? 'All' : type === 'movies' ? 'Movies' : 'TV Shows'}
+          {type === 'all' ? 'All' : type === 'movies' ? 'Movies' : 'Series'}
           <span className='ml-1 text-base'>({watchlist?.[type]})</span>
         </h2>
         <List items={items || []} query={query} type={type} />

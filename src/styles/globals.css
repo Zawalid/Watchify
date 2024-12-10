@@ -22,7 +22,7 @@
 }
 
 .blur-bg {
-  @apply bg-[url('/images/Background.svg')] bg-cover bg-no-repeat bg-Grey/900
+  @apply !bg-[url('/images/Background.svg')] !bg-cover !bg-no-repeat !bg-Grey/900
 }
 
 

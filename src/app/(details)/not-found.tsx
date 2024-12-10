@@ -23,7 +23,7 @@ export default function NotFound() {
           <br />
           Please check the URL or go back.
         </p>
-        <Link href={pathname.includes("/movies") ? "/movies" : "/tv-shows"}>
+        <Link href={pathname.includes("/movies") ? "/movies" : "/series"}>
           <Button className="mt-6" color="primary" size="lg">
             Go Back
           </Button>

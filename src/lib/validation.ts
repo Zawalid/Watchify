@@ -29,6 +29,13 @@ export const resetPasswordSchema = z
 
 export const profileSchema = z.object({
   name: common.name,
+  location: z.string().min(1, { message: 'Please enter your location' }),
+  preference: z.string(),
+  bio: z
+    .string()
+    .min(1, { message: 'Please enter your bio' })
+    .min(10, { message: 'Bio must be at least 10 characters long' })
+    .max(500, { message: 'Bio must be less than 500 characters' }),
 });
 
 export const changeEmailSchema = z

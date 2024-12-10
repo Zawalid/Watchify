@@ -8,12 +8,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         tabs={[
           { label: 'All', value: 'all', link: '/watchlist' },
           { label: 'Movies', value: 'movies', link: '/watchlist/movies' },
-          { label: 'TV Shows', value: 'tv-shows', link: '/watchlist/tv-shows' },
+          { label: 'Series', value: 'series', link: '/watchlist/series' },
         ]}
         TABS_INDICATORS={{
           all: { left: 8, width: 79 },
           movies: { left: 107, width: 102 },
-          'tv-shows': { left: 229, width: 112 },
+          series: { left: 229, width: 96 },
         }}
         preserveSearchParams={true}
         className='order-3'
@@ -26,7 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 /* 
 
  <p className="text-Grey/300 leading-relaxed">
-   List of movies and TV Shows, I, <span className="text-Primary/300">Walid Zakan</span> have
+   List of movies and Series, I, <span className="text-Primary/300">Walid Zakan</span> have
    watched till date.
    <br />
    Explore what I have watched and also feel free to make a suggestion. 😉

@@ -11,18 +11,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <Tabs
             tabs={[
               { label: 'Movies', value: 'movies', link: '/movies', includes: true },
-              { label: 'TV Shows', value: 'tv-shows', link: '/tv-shows', includes: true },
+              { label: 'Series', value: 'series', link: '/series', includes: true },
               { label: 'Search', value: 'search', link: '/search' },
             ]}
             TABS_INDICATORS={{
               movies: { left: 8, width: 102 },
-              'tv-shows': { left: 130, width: 112 },
+              series: { left: 130, width: 96 },
               search: { left: 262, width: 101 },
             }}
           />
         </div>
         <p className='leading-relaxed text-Grey/300'>
-          Browse a wide variety of movies and TV shows. Find new favorites to watch and enjoy.
+          Browse a wide variety of movies and series. Find new favorites to watch and enjoy.
         </p>
       </div>
       <Suspense fallback={<div>Loading...</div>}>

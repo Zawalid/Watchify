@@ -35,8 +35,8 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/tv-shows',
-        destination: '/tv-shows/popular',
+        source: '/series',
+        destination: '/series/popular',
         permanent: true,
       },
       {

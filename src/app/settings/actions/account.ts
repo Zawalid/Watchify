@@ -53,15 +53,19 @@ export const updateName = async (name: string) => {
   }
 };
 
-export const updateProfile = async (data: Partial<Profile>) => {
+export const updateProfile = async (data: Partial<Profile>, updated: string[]) => {
   const { database } = await createSessionClient();
   const user = await getUser();
 
   if (!user || !database) return { message: 'Something went wrong. Please try again later.' };
 
   try {
-    await updateName(data.name || '');
-    await database.updateDocument(DATABASE_ID, PROFILES_COLLECTION_ID, user.$id, data);
+    if (updated.includes('name')) await updateName(data.name || '');
+
+    if (updated.filter((key) => key !== 'name').length) {
+      const { name, ...rest } = data;
+      await database.updateDocument(DATABASE_ID, PROFILES_COLLECTION_ID, user.$id, rest);
+    }
 
     revalidatePath('/settings/account');
   } catch (error) {

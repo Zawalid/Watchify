@@ -14,10 +14,10 @@ export const getUser = async (): Promise<Profile | null> => {
     const { account, database, locale, avatars } = await createSessionClient();
     if (!account || !database) return null;
 
-    const { $id: account_id, name, email, prefs,emailVerification } = await account.get();
+    const { $id: account_id, name, email, prefs, emailVerification } = await account.get();
     const initialsAvatar = await avatars.getInitials(name);
     const profile = (await database.listDocuments(DATABASE_ID, PROFILES_COLLECTION_ID)).documents[0];
-    const { $id, avatar, watchlist, $createdAt, $updatedAt } = profile;
+    const { $id, avatar, watchlist, bio, preference, $createdAt, $updatedAt } = profile;
 
     const updatedProfile: Profile = {
       $id,
@@ -25,13 +25,15 @@ export const getUser = async (): Promise<Profile | null> => {
       name,
       email,
       avatar,
+      bio,
+      preference,
       initialsAvatar: bufferToBase64(initialsAvatar),
       locale,
       watchlist,
       preferences: { sign_out_confirmation: 'enabled', ...prefs },
       $createdAt,
       $updatedAt,
-      emailVerification
+      emailVerification,
     };
 
     return updatedProfile;

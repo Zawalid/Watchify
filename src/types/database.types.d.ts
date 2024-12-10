@@ -7,6 +7,8 @@ declare global {
     name: string;
     email: string;
     avatar: string | null;
+    preference: 'movies' | 'series' | 'both';
+    bio: string;
     initialsAvatar: string | null;
     locale: Models.Locale;
     watchlist: Watchlist | null;

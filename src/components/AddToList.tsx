@@ -18,8 +18,8 @@ const sampleData: List[] = [
     items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   },
   {
-    name: 'TV Shows',
-    description: 'A list of TV shows that I have watched and enjoyed.',
+    name: 'Series',
+    description: 'A list of series that I have watched and enjoyed.',
     public: false,
     items: [1, 2, 3, 4, 5],
   },
